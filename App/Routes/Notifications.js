@@ -7,9 +7,10 @@ import Loading from '../Components/Loading';
 
 import {
   ListView,
-  View,
+  Text,
+  RefreshControl,
   StyleSheet,
-  Text
+  View
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -40,7 +41,7 @@ class NotificationsView extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchNotifications();
+    this.props.fetchNotifications(false);
   }
 
   _renderRow(rowData) {
@@ -61,8 +62,12 @@ class NotificationsView extends Component {
           style={styles.listContainer}
           enableEmptySections={true}
           dataSource={this.state.notificationsSource}
-          renderRow={this._renderRow.bind(this)} />
-
+          renderRow={this._renderRow.bind(this)}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.isReFetching}
+              onRefresh={() => this.props.fetchNotifications(true)} />
+          } />
         <Loading isLoading={this.props.isFetching} />
       </View>
     );
@@ -72,6 +77,7 @@ class NotificationsView extends Component {
 function mapStateToProps(state) {
   return {
     isFetching: state.notifications.get('isFetching'),
+    isReFetching: state.notifications.get('isReFetching'),
     notifications: state.notifications.get('response', [])
   };
 };

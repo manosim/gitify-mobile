@@ -6,7 +6,8 @@ export default store => next => action => {
     return next(action);
   }
 
-  switch (action[CALL_API].types[0]) {
+  switch (action[CALL_API].types[0].type) {
+
     // case FETCH_NOTIFICATIONS_REQUEST:
     //   const settings = store.getState().settings;
     //   const endpoint = action[CALL_API].endpoint + '?participating=';

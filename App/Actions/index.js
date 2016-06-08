@@ -44,7 +44,7 @@ export function fetchToken(data) {
 export const FETCH_NOTIFICATIONS_REQUEST = 'FETCH_NOTIFICATIONS_REQUEST';
 export const FETCH_NOTIFICATIONS_SUCCESS = 'FETCH_NOTIFICATIONS_SUCCESS';
 export const FETCH_NOTIFICATIONS_FAILURE = 'FETCH_NOTIFICATIONS_FAILURE';
-export function fetchNotifications(data) {
+export function fetchNotifications(isReFetching = false) {
   return {
     [CALL_API]: {
       endpoint: 'https://api.github.com/notifications',
@@ -54,14 +54,21 @@ export function fetchNotifications(data) {
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache'
       },
-      body: JSON.stringify(data),
-      types: [FETCH_NOTIFICATIONS_REQUEST, {
-        type: FETCH_NOTIFICATIONS_SUCCESS,
-        payload: (action, state, res) => getJSON(res)
-      }, {
-        type: FETCH_NOTIFICATIONS_FAILURE,
-        payload: (action, state, res) => getJSON(res)
-      }]
+      types: [
+        {
+          type: FETCH_NOTIFICATIONS_REQUEST,
+          meta: { isReFetching }
+        },
+        {
+          type: FETCH_NOTIFICATIONS_SUCCESS,
+          meta: { isReFetching },
+          payload: (action, state, res) => getJSON(res)
+        },
+        {
+          type: FETCH_NOTIFICATIONS_FAILURE,
+          meta: { isReFetching }
+        }
+      ]
     }
   };
 };
