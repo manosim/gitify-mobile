@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import immutable from 'immutable';
 
 import { fetchNotifications } from '../Actions';
-import Loading from './Loading';
+import Loading from '../Components/Loading';
 
 import {
   ListView,
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export class NotificationsList extends Component {
+class NotificationsView extends Component {
 
   constructor(props) {
     super(props);
@@ -39,12 +39,11 @@ export class NotificationsList extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchNotifications();
   }
 
   _renderRow(rowData) {
-    console.log(rowData);
     return (
       <View>
         <Text>{rowData.id}</Text>
@@ -77,4 +76,4 @@ function mapStateToProps(state) {
   };
 };
 
-export default connect(mapStateToProps, { fetchNotifications })(NotificationsList);
+export default connect(mapStateToProps, { fetchNotifications })(NotificationsView);

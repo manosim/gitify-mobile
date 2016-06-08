@@ -1,6 +1,16 @@
 import {CALL_API, getJSON} from 'redux-api-middleware';
 
 
+// Settings
+
+export const APP_LOADED = 'APP_LOADED';
+export function appLoaded() {
+  return {
+    type: APP_LOADED
+  };
+};
+
+
 // Auth
 
 export const FETCH_TOKEN_REQUEST = 'FETCH_TOKEN_REQUEST';

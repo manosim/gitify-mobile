@@ -1,5 +1,4 @@
 import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
-import { connect } from 'react-redux';
 
 import {
   Image,
@@ -10,10 +9,9 @@ import {
 
 import Button from '../Components/Button';
 import Constants from '../Utils/Constants';
-import NotificationsList from '../Components/Notifications';
 import Routes from '../Navigation/Routes';
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -38,7 +36,7 @@ var styles = StyleSheet.create({
   }
 });
 
-class Dashboard extends Component {
+export default class Dashboard extends Component {
   doOAuth() {
     const authUrl = [
       'https://github.com/login/oauth/authorize',
@@ -52,30 +50,15 @@ class Dashboard extends Component {
   }
 
   render() {
-    const isLoggedIn = this.props.auth.get('token') !== null;
-
     return (
       <View style={styles.container}>
-
-        {isLoggedIn ? (
-          <NotificationsList />
-        ) : (
         <View style={styles.loginWrapper}>
           <Image style={styles.logo} source={require('../../images/logo.png')} />
           <Text style={styles.text}>Gitify Mobile</Text>
           <Text style={styles.description}>GitHub Notifications{'\n'} in your pocket</Text>
           <Button text="Login with GitHub" onPress={() => this.doOAuth()} />
         </View>
-        )}
       </View>
     );
   }
 };
-
-function mapStateToProps(state) {
-  return {
-    auth: state.auth,
-  };
-};
-
-export default connect(mapStateToProps, null)(Dashboard);

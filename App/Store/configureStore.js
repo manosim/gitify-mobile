@@ -4,7 +4,7 @@ import * as storage from 'redux-storage';
 import createEngine from 'redux-storage-engine-reactnativeasyncstorage';
 import filter from 'redux-storage-decorator-filter';
 
-import { FETCH_TOKEN_SUCCESS } from '../Actions';
+import { FETCH_TOKEN_SUCCESS, appLoaded } from '../Actions';
 import Constants from '../Utils/Constants';
 import requestsMiddleware from '../Middleware/Requests';
 import rootReducer from '../Reducers';
@@ -32,6 +32,7 @@ export default function configureStore(initialState) {
   load(store)
     .then((newState) => {
       console.log('Loaded state:', newState);
+      store.dispatch(appLoaded());
     })
     .catch(() => console.log('Failed to load previous state'));
 

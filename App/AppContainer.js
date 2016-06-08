@@ -41,12 +41,12 @@ export default class AppContainer extends Component {
   }
 
   render() {
-    const dashboardRoute = Routes.Dashboard();
+    const initialRoute = Routes.Loading();
 
     return (
       <Provider store={store}>
         <Navigator
-          initialRoute={dashboardRoute}
+          initialRoute={initialRoute}
           renderScene={this.renderScene}
           navigationBar={<NavigationBar style={styles.navbar} routeMapper={RouteMapper} />} />
       </Provider>
