@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-u
 import Icon from 'react-native-vector-icons/Octicons';
 
 import Constants from '../Utils/Constants';
-import Notification from './Notification';
 
 import {
   Image,
@@ -41,7 +40,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Repository extends Component {
+export default class RepositoryTitle extends Component {
 
   static propTypes = {
     details: PropTypes.object.isRequired
@@ -49,18 +48,15 @@ export default class Repository extends Component {
 
   render() {
     const details = this.props.details;
-    const avatar_url = details.notifications[0].repository.owner.avatar_url || null;
+    const avatar_url = details.owner.avatar_url || null;
 
     return (
       <View style={styles.container}>
         <View style={styles.titleBar}>
           <Image style={styles.avatar} source={{uri: avatar_url}} />
-          <Text style={styles.title} numberOfLines={1}>{details.repository}</Text>
+          <Text style={styles.title} numberOfLines={1}>{details.full_name}</Text>
           <Icon name="check" style={styles.checkIcon} />
         </View>
-        {details.notifications.map((notification) => {
-          return <Notification key={notification.id} details={notification} />;
-        })}
       </View>
     );
   };
