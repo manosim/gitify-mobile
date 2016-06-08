@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
+import Icon from 'react-native-vector-icons/Octicons';
 
 import Constants from '../Utils/Constants';
 import Notification from './Notification';
@@ -27,10 +28,16 @@ const styles = StyleSheet.create({
     borderRadius: 15
   },
   title: {
+    flex: 1,
     paddingVertical: 10,
     paddingHorizontal: 10,
     fontSize: 16,
     fontWeight: 'bold'
+  },
+  checkIcon: {
+    fontSize: 20,
+    marginRight: 15,
+    color: Constants.THEME_ALT
   }
 });
 
@@ -49,6 +56,7 @@ export default class Repository extends Component {
         <View style={styles.titleBar}>
           <Image style={styles.avatar} source={{uri: avatar_url}} />
           <Text style={styles.title} numberOfLines={1}>{details.repository}</Text>
+          <Icon name="check" style={styles.checkIcon} />
         </View>
         {details.notifications.map((notification) => {
           return <Notification key={notification.id} details={notification} />;
