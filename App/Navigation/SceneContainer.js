@@ -1,27 +1,27 @@
 import React from 'react';
 
 import {
-  Platform,
   StyleSheet,
   View
 } from 'react-native';
 
+import Constants from '../Utils/Constants';
+
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF'
+    backgroundColor: Constants.BG_COLOR
+
   }
 });
 
 export default class SceneContainer extends React.Component {
   render() {
     const Component = this.props.route.component;
-    const platformStyle = {
-      marginTop: (Platform.OS === 'ios' ? 64 : 56)
-    };
+    const navbarStyle = {marginTop: (this.props.route.displayNavBar ? Constants.NAVBAR_HEIGHT : 0 )};
 
     return (
-      <View style={[styles.container, platformStyle]}>
+      <View style={[styles.container, navbarStyle]}>
         <Component
           navigator={this.props.navigator}
           currentRoute={this.props.route}
