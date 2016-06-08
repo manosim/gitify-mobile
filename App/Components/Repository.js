@@ -42,12 +42,12 @@ export default class Repository extends Component {
 
   render() {
     const details = this.props.details;
-    console.log(details.avatar_url);
+    const avatar_url = details.notifications[0].repository.owner.avatar_url || null;
 
     return (
       <View style={styles.container}>
         <View style={styles.titleBar}>
-          <Image style={styles.avatar} source={{uri: details.avatar_url}} />
+          <Image style={styles.avatar} source={{uri: avatar_url}} />
           <Text style={styles.title} numberOfLines={1}>{details.repository}</Text>
         </View>
         {details.notifications.map((notification) => {

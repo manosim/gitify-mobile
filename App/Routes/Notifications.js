@@ -18,13 +18,6 @@ import {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  repository: {
-
-  },
-  repoTitle: {
-
-
   }
 });
 
@@ -45,18 +38,8 @@ class NotificationsView extends Component {
     if (nextProps.notifications !== this.props.notifications) {
       const response = _.chain(nextProps.notifications)
         .groupBy((object) => object.repository.full_name)
-        .map(function(value, key) {
-          return {
-            repository: key,
-            avatar_url: value[0].repository.owner.avatar_url,
-            notifications: value
-          };
-        })
+        .map((notifications, repository) => ({ repository, notifications }))
         .value();
-
-      console.log('-----');
-      console.log(response);
-      console.log('-----');
 
       this.setState({
         notificationsSource: this.state.notificationsSource.cloneWithRows(response)
