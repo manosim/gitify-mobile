@@ -14,8 +14,11 @@ export default {
   THEME_ALT: '#BFBFBF',
   THEME_ALT_ACTIVE: '#7F7F7F',
 
+  REPO_TITLE_BG: '#E1E1E1',
+
   BG_COLOR: '#F5FCFF',
 
+  NAVBAR_BG: '#DFE0E2',
   NAVBAR_HEIGHT: (Platform.OS === 'ios' ? 64 : 56),
   NAVBAR_BUTTON_ICON_SIZE: 32,
   BASE_BORDER_RADIUS: 5

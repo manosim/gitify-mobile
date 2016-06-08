@@ -1,13 +1,15 @@
+import _ from 'underscore';
 import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
 import { connect } from 'react-redux';
 import immutable from 'immutable';
 
 import { fetchNotifications } from '../Actions';
+// import Constants from '../Utils/Constants';
 import Loading from '../Components/Loading';
+import Repository from '../Components/Repository';
 
 import {
   ListView,
-  Text,
   RefreshControl,
   StyleSheet,
   View
@@ -16,6 +18,13 @@ import {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  repository: {
+
+  },
+  repoTitle: {
+
+
   }
 });
 
@@ -34,8 +43,23 @@ class NotificationsView extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.notifications !== this.props.notifications) {
+      const response = _.chain(nextProps.notifications)
+        .groupBy((object) => object.repository.full_name)
+        .map(function(value, key) {
+          return {
+            repository: key,
+            avatar_url: value[0].repository.owner.avatar_url,
+            notifications: value
+          };
+        })
+        .value();
+
+      console.log('-----');
+      console.log(response);
+      console.log('-----');
+
       this.setState({
-        notificationsSource: this.state.notificationsSource.cloneWithRows(nextProps.notifications)
+        notificationsSource: this.state.notificationsSource.cloneWithRows(response)
       });
     }
   }
@@ -46,12 +70,7 @@ class NotificationsView extends Component {
 
   _renderRow(rowData) {
     return (
-      <View>
-        <Text>{rowData.id}</Text>
-        <Text>{rowData.repository.full_name}</Text>
-        <Text>{rowData.subject.title}</Text>
-        <Text>------------</Text>
-      </View>
+      <Repository details={rowData} />
     );
   }
 
