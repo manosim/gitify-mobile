@@ -8,6 +8,7 @@ export default {
       id: 'dashboard-view',
       title: 'Dashboard',
       component: Dashboard,
+      displayNavBar: false
     };
   },
 
@@ -16,7 +17,8 @@ export default {
       id: 'oauth-view',
       title: 'Authentication',
       component: OAuthView,
-      passProps: props
+      passProps: props,
+      displayNavBar: true
     };
   },
 

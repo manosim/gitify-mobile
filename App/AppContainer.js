@@ -8,6 +8,7 @@ import {
 
 import configureStore from './Store/configureStore';
 import Constants from './Utils/Constants';
+import NavigationBar from './Navigation/NavigationBar';
 import SceneContainer from './Navigation/SceneContainer';
 import RouteMapper from './Navigation/RouteMapper';
 import Routes from './Navigation/Routes';
@@ -47,7 +48,7 @@ export default class AppContainer extends Component {
         <Navigator
           initialRoute={dashboardRoute}
           renderScene={this.renderScene}
-          navigationBar={<Navigator.NavigationBar style={styles.navbar} routeMapper={RouteMapper} />} />
+          navigationBar={<NavigationBar style={styles.navbar} routeMapper={RouteMapper} />} />
       </Provider>
     );
   }

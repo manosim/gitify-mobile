@@ -8,7 +8,8 @@ import {
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#F5FCFF'
   }
 });
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
 import { connect } from 'react-redux';
 
 import {
+  Image,
   StyleSheet,
   Text,
   View
@@ -13,9 +14,12 @@ import Constants from '../Utils/Constants';
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  logo: {
+    width: 125,
+    height: 125
   },
   text: {
     fontSize: 18,
@@ -39,6 +43,7 @@ class Dashboard extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Image style={styles.logo} source={require('../../images/logo.png')} />
         <Text style={styles.text}>Gitify Mobile</Text>
       </View>
     );
