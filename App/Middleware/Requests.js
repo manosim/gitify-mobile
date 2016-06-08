@@ -15,7 +15,7 @@ export default store => next => action => {
     case FETCH_NOTIFICATIONS_REQUEST:
     // case MARK_NOTIFICATION_REQUEST:
     // case MARK_REPO_NOTIFICATION_REQUEST:
-      const token = 'token ' + store.getState().auth.token;
+      const token = 'token ' + store.getState().auth.get('token');
       action[CALL_API].headers['Authorization'] = token;
   }
 

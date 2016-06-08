@@ -32,9 +32,9 @@ export class NotificationsList extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.notifications.toArray() !== this.props.notifications.toArray()) {
+    if (nextProps.notifications !== this.props.notifications) {
       this.setState({
-        notificationsSource: this.state.notificationsSource.cloneWithRows(nextProps.notifications.toArray())
+        notificationsSource: this.state.notificationsSource.cloneWithRows(nextProps.notifications)
       });
     }
   }
@@ -44,10 +44,10 @@ export class NotificationsList extends Component {
   }
 
   _renderRow(rowData) {
-    console.log(rowData.toJS());
+    console.log(rowData);
     return (
       <View>
-        <Text>{rowData.get('id')}</Text>
+        <Text>{rowData}</Text>
       </View>
     );
   }
@@ -70,7 +70,7 @@ export class NotificationsList extends Component {
 function mapStateToProps(state) {
   return {
     isFetching: state.notifications.get('isFetching'),
-    notifications: state.notifications.get('response', immutable.List())
+    notifications: state.notifications.get('response', [])
   };
 };
 
