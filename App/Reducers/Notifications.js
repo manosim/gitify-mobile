@@ -1,4 +1,4 @@
-import { List, Map} from 'immutable';
+import { Map } from 'immutable';
 import * as actions from '../Actions';
 
 const initialState = Map({

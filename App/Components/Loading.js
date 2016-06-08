@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
@@ -26,22 +26,22 @@ var styles = StyleSheet.create({
 
 export default class Loading extends Component {
   render() {
+    if (!this.props.isLoading) {
+      return null;
+    }
+
+    const text = this.props.text ? ' ' + this.props.text : null;
     const loading = Platform.OS === 'ios' ? (
-      <ActivityIndicatorIOS
-        animating={true}
-        color={Constants.THEME_PRIMARY}
-        size="large" />
+      <ActivityIndicatorIOS animating={true} color={Constants.THEME_PRIMARY} size="large" />
     ) : (
-      <ProgressBarAndroid
-        styleAttr="Inverse"
-        color={Constants.THEME_PRIMARY} />
+      <ProgressBarAndroid styleAttr="Inverse" color={Constants.THEME_PRIMARY} />
     );
 
     return (
       <View style={[styles.container, this.props.style && this.props.style]}>
         {loading}
         {this.props.hideText ? <View /> : (
-          <Text style={styles.loadingText}>Loading {this.props.text}</Text>
+          <Text style={styles.loadingText}>Loading{text}</Text>
         )}
       </View>
     );

@@ -47,7 +47,10 @@ export class NotificationsList extends Component {
     console.log(rowData);
     return (
       <View>
-        <Text>{rowData}</Text>
+        <Text>{rowData.id}</Text>
+        <Text>{rowData.repository.full_name}</Text>
+        <Text>{rowData.subject.title}</Text>
+        <Text>------------</Text>
       </View>
     );
   }
