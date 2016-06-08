@@ -43,6 +43,7 @@ export default class NavigationButton extends Component {
         underlayColor={Constants.THEME_COLOR}
         onPress={this._goBack.bind(this)}>
         <Icon name="chevron-left" style={styles.icon} />
+        {/*<Icon name="three-bars" style={styles.icon} />*/}
       </TouchableHighlight>
     );
   }
@@ -50,15 +51,7 @@ export default class NavigationButton extends Component {
   render() {
     return (
       <View style={styles.container}>
-
         {this._renderBackButton()}
-
-        <TouchableHighlight
-          style={styles.toolbarButton}
-          underlayColor={Constants.THEME_COLOR}
-          onPress={this.context.drawer.toggle}>
-          <Icon name="three-bars" style={styles.icon} />
-        </TouchableHighlight>
       </View>
     );
   }

@@ -1,36 +1,28 @@
+import immutable from 'immutable';
 import * as actions from '../Actions';
 
-const initialState = {
-  loaded: false,
+const initialState = immutable.Map({
   isFetching: false,
+  errored: false,
   token: null
-};
+});
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case actions.FETCH_TOKEN_REQUEST:
-      return {
-        ...state,
-        isFetching: true
-      };
+      return state
+        .set('errored', false)
+        .set('isFetching', true);
     case actions.FETCH_TOKEN_SUCCESS:
-      return {
-        ...state,
-        isFetching: false,
-        token: {
-          ...state.token,
-          github: action.payload.access_token
-        }
-      };
+      return state
+        .set('errored', false)
+        .set('isFetching', false)
+        .set('token', action.payload.access_token);
     case actions.FETCH_TOKEN_FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-        token: {
-          ...state.token,
-          github: null
-        }
-      };
+      return state
+        .set('errored', true)
+        .set('isFetching', false)
+        .set('token', null);
     default:
       return state;
   }

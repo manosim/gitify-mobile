@@ -8,6 +8,7 @@ import {
   View
 } from 'react-native';
 
+import Button from '../Components/Button';
 import Routes from '../Navigation/Routes';
 import Constants from '../Utils/Constants';
 
@@ -45,6 +46,7 @@ class Dashboard extends Component {
       <View style={styles.container}>
         <Image style={styles.logo} source={require('../../images/logo.png')} />
         <Text style={styles.text}>Gitify Mobile</Text>
+        <Button text="Login with GitHub" onPress={() => this.doOAuth()} />
       </View>
     );
   }
