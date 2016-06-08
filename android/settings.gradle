@@ -1,0 +1,3 @@
+rootProject.name = 'Gitify'
+
+include ':app'
