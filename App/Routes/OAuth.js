@@ -6,7 +6,7 @@ import {
   WebView,
 } from 'react-native';
 
-import { fetchGithubToken, fetchTravisToken } from '../Actions';
+import { fetchToken } from '../Actions';
 import Constants from '../Utils/Constants';
 import Loading from '../Components/Loading';
 
@@ -24,13 +24,13 @@ class OAuthView extends Component {
   }
 
   requestGithubToken(code) {
-    var data = {
+    const data = {
       client_id: Constants.oAuthOptions.client_id,
       client_secret: Constants.oAuthOptions.client_secret,
       code: code
     };
 
-    this.props.fetchGithubToken(data);
+    this.props.fetchToken(data);
   }
 
   onNavigationStateChange(args) {
@@ -71,4 +71,4 @@ function mapStateToProps(state) {
   };
 };
 
-export default connect(mapStateToProps, { fetchGithubToken, fetchTravisToken })(OAuthView);
+export default connect(mapStateToProps, { fetchToken })(OAuthView);
