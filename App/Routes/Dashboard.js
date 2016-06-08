@@ -9,11 +9,15 @@ import {
 } from 'react-native';
 
 import Button from '../Components/Button';
-import Routes from '../Navigation/Routes';
 import Constants from '../Utils/Constants';
+import NotificationsList from '../Components/Notifications';
+import Routes from '../Navigation/Routes';
 
 var styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  loginWrapper: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
@@ -24,7 +28,13 @@ var styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginVertical: 10
+  },
+  description: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 20
   }
 });
 
@@ -42,11 +52,21 @@ class Dashboard extends Component {
   }
 
   render() {
+    const isLoggedIn = this.props.auth.get('token') !== null;
+
     return (
       <View style={styles.container}>
-        <Image style={styles.logo} source={require('../../images/logo.png')} />
-        <Text style={styles.text}>Gitify Mobile</Text>
-        <Button text="Login with GitHub" onPress={() => this.doOAuth()} />
+
+        {isLoggedIn ? (
+          <NotificationsList />
+        ) : (
+        <View style={styles.loginWrapper}>
+          <Image style={styles.logo} source={require('../../images/logo.png')} />
+          <Text style={styles.text}>Gitify Mobile</Text>
+          <Text style={styles.description}>GitHub Notifications{'\n'} in your pocket</Text>
+          <Button text="Login with GitHub" onPress={() => this.doOAuth()} />
+        </View>
+        )}
       </View>
     );
   }

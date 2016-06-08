@@ -45,11 +45,11 @@ export function fetchNotifications(data) {
         'Cache-Control': 'no-cache'
       },
       body: JSON.stringify(data),
-      types: [FETCH_TOKEN_REQUEST, {
-        type: FETCH_TOKEN_SUCCESS,
+      types: [FETCH_NOTIFICATIONS_REQUEST, {
+        type: FETCH_NOTIFICATIONS_SUCCESS,
         payload: (action, state, res) => getJSON(res)
       }, {
-        type: FETCH_TOKEN_FAILURE,
+        type: FETCH_NOTIFICATIONS_FAILURE,
         payload: (action, state, res) => getJSON(res)
       }]
     }

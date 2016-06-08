@@ -16,8 +16,6 @@ class OAuthView extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.auth);
-
     if (nextProps.auth.get('token')) {
       this.props.navigator.pop();
     }
@@ -51,7 +49,7 @@ class OAuthView extends Component {
   }
 
   render() {
-    if (this.props.auth.isFetching || this.props.auth.token) {
+    if (this.props.auth.get('isFetching') || this.props.auth.get('token')) {
       return <Loading text="Auth" />;
     }
 

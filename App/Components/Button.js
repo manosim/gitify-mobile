@@ -46,7 +46,7 @@ export default class Button extends Component {
       <TouchableHighlight
         style={styles.button}
         disabled={this.props.disabled}
-        underlayColor={Constants.THEME_PRIMARY_ACTIVE}
+        underlayColor={Constants.THEME_ALT_ACTIVE}
         onPress={this.onPress.bind(this)}>
         <Text style={styles.buttonText}>{this.props.text}</Text>
       </TouchableHighlight>
