@@ -1,53 +1,53 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
 
-import React, { Component } from 'react';
 import {
   AppRegistry,
-  StyleSheet,
-  Text,
-  View
+  StyleSheet
 } from 'react-native';
 
+import configureStore from './Store/configureStore';
+import Constants from './Utils/Constants';
+import Routes from './Navigation/Routes';
+
+// Store
+const store = configureStore();
+
+const styles = StyleSheet.create({
+  navbar: {
+    backgroundColor: Constants.THEME_ALT,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  }
+});
+
 class Gitify extends Component {
-  render() {
+  renderScene(route, navigator) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+      <SceneContainer
+        title={route.title}
+        route={route}
+        navigator={navigator}
+        onBack={() => {
+          if (route.index > 0) {
+            navigator.pop();
+          }
+        }}
+        {...this.props} />
+    );
+  }
+
+  render() {
+    const dashboardRoute = Routes.Dashboard();
+
+    return (
+      <Provider store={store}>
+        <Navigator
+          initialRoute={dashboardRoute}
+          renderScene={this.renderScene}
+          navigationBar={<Navigator.NavigationBar style={styles.navbar} routeMapper={RouteMapper} />} />
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
 AppRegistry.registerComponent('Gitify', () => Gitify);
