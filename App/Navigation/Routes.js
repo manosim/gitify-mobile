@@ -1,19 +1,9 @@
 import LoginView from '../Routes/LoginView';
-// import SetUpView from '../Routes/SetUpView';
+import SettingsView from '../Routes/SettingsView';
 import NotificationsView from '../Routes/Notifications';
-import OAuthView from '../Routes/OAuth';
+import OAuthView from '../Routes/OAuthView';
 
 export default {
-
-  SetUpView() {
-    return {
-      id: 'setup-view',
-      title: 'Setting Up',
-      component: SetUpView,
-      displayNavBar: false
-    };
-  },
-
   LoginView() {
     return {
       id: 'login-view',
@@ -43,4 +33,13 @@ export default {
     };
   },
 
+  SettingsView(props) {
+    return {
+      id: 'settings-view',
+      title: 'Settings',
+      component: SettingsView,
+      passProps: props,
+      displayNavBar: true
+    };
+  },
 };
