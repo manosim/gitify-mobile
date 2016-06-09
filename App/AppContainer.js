@@ -18,7 +18,7 @@ const store = configureStore();
 
 const styles = StyleSheet.create({
   navbar: {
-    backgroundColor: Constants.THEME_ALT,
+    backgroundColor: Constants.NAVBAR_BG,
     flexDirection: 'row',
     justifyContent: 'center',
   }
