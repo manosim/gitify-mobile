@@ -1,20 +1,16 @@
 import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
-import { Provider } from 'react-redux';
+import { connect } from 'react-redux';
 
 import {
   Navigator,
   StyleSheet
 } from 'react-native';
 
-import configureStore from './Store/configureStore';
 import Constants from './Utils/Constants';
 import NavigationBar from './Navigation/NavigationBar';
 import SceneContainer from './Navigation/SceneContainer';
 import RouteMapper from './Navigation/RouteMapper';
 import Routes from './Navigation/Routes';
-
-// Store
-const store = configureStore();
 
 const styles = StyleSheet.create({
   navbar: {
@@ -24,7 +20,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class AppContainer extends Component {
+class AppContainer extends Component {
   renderScene(route, navigator) {
     return (
       <SceneContainer
@@ -41,8 +37,7 @@ export default class AppContainer extends Component {
   }
 
   _getInitialRoute() {
-    const isLoggedIn = store.getState().auth.get('token') !== null;
-    if (isLoggedIn) {
+    if (this.props.isLoggedIn) {
       return Routes.Notifications();
     }
     return Routes.LoginView();
@@ -52,12 +47,19 @@ export default class AppContainer extends Component {
     const initialRoute = this._getInitialRoute();
 
     return (
-      <Provider store={store}>
-        <Navigator
-          initialRoute={initialRoute}
-          renderScene={this.renderScene}
-          navigationBar={<NavigationBar style={styles.navbar} routeMapper={RouteMapper} />} />
-      </Provider>
+      <Navigator
+        initialRoute={initialRoute}
+        renderScene={this.renderScene}
+        navigationBar={<NavigationBar style={styles.navbar} routeMapper={RouteMapper} />} />
     );
   }
 }
+
+
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: state.auth.get('token') !== null
+  };
+};
+
+export default connect(mapStateToProps, null) (AppContainer);
