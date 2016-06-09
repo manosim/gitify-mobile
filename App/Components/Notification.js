@@ -69,7 +69,8 @@ class Notification extends Component {
         <Icon name={this._getTypeIcon()} style={styles.typeIcon} />
         <Text style={styles.title} numberOfLines={1}>{details.subject.title}</Text>
         <TouchableHighlight
-          onPress={() => this.markAsRead()}>
+          onPress={() => this.markAsRead()}
+          underlayColor={Constants.BG_COLOR}>
           <Icon name="check" style={styles.checkIcon} />
         </TouchableHighlight>
       </View>

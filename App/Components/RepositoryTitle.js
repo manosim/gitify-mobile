@@ -66,7 +66,8 @@ class RepositoryTitle extends Component {
           <Image style={styles.avatar} source={{uri: avatar_url}} />
           <Text style={styles.title} numberOfLines={1}>{details.full_name}</Text>
           <TouchableHighlight
-            onPress={() => this.markAsRead()}>
+            onPress={() => this.markAsRead()}
+            underlayColor={Constants.REPO_TITLE_BG}>
             <Icon name="check" style={styles.checkIcon} />
           </TouchableHighlight>
         </View>
