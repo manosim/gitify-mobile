@@ -40,8 +40,16 @@ export default class AppContainer extends Component {
     );
   }
 
+  _getInitialRoute() {
+    const isLoggedIn = store.getState().auth.get('token') !== null;
+    if (isLoggedIn) {
+      return Routes.Notifications();
+    }
+    return Routes.LoginView();
+  }
+
   render() {
-    const initialRoute = Routes.SetUpView();
+    const initialRoute = this._getInitialRoute();
 
     return (
       <Provider store={store}>

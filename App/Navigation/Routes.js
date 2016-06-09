@@ -1,5 +1,5 @@
 import LoginView from '../Routes/LoginView';
-import SetUpView from '../Routes/SetUpView';
+// import SetUpView from '../Routes/SetUpView';
 import NotificationsView from '../Routes/Notifications';
 import OAuthView from '../Routes/OAuth';
 
