@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import { Map } from 'immutable';
 import * as actions from '../Actions';
 
@@ -32,6 +33,10 @@ export default function reducer(state = initialState, action) {
         .set('errored', true)
         .set('isFetching', false)
         .set('isReFetching', false);
+    case actions.MARK_NOTIFICATION_SUCCESS:
+      const id = action.meta.id;
+      return state
+        .set('response', _.without(state.get('response'), _.findWhere(state.get('response'), {id})));
     default:
       return state;
   }

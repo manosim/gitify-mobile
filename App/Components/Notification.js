@@ -1,11 +1,14 @@
 import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Octicons';
 
+import { markNotification } from '../Actions';
 import Constants from '../Utils/Constants';
 
 import {
   StyleSheet,
   Text,
+  TouchableHighlight,
   View
 } from 'react-native';
 
@@ -34,8 +37,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Notification extends Component {
-
+class Notification extends Component {
   static propTypes = {
     details: PropTypes.object.isRequired
   };
@@ -55,6 +57,10 @@ export default class Notification extends Component {
     }
   }
 
+  markAsRead() {
+    this.props.markNotification(this.props.details.id);
+  }
+
   render() {
     const details = this.props.details;
 
@@ -62,9 +68,14 @@ export default class Notification extends Component {
       <View style={styles.container}>
         <Icon name={this._getTypeIcon()} style={styles.typeIcon} />
         <Text style={styles.title} numberOfLines={1}>{details.subject.title}</Text>
-        <Icon name="check" style={styles.checkIcon} />
+        <TouchableHighlight
+          onPress={() => this.markAsRead()}>
+          <Icon name="check" style={styles.checkIcon} />
+        </TouchableHighlight>
       </View>
     );
   };
-
 };
+
+
+export default connect(null, { markNotification })(Notification);

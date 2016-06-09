@@ -79,3 +79,35 @@ export function fetchNotifications(isReFetching = false) {
     }
   };
 };
+
+
+// Single Notification
+
+export const MARK_NOTIFICATION_REQUEST = 'MARK_NOTIFICATION_REQUEST';
+export const MARK_NOTIFICATION_SUCCESS = 'MARK_NOTIFICATION_SUCCESS';
+export const MARK_NOTIFICATION_FAILURE = 'MARK_NOTIFICATION_FAILURE';
+export function markNotification(id) {
+  return {
+    [CALL_API]: {
+      endpoint: `https://api.github.com/notifications/threads/${id}`,
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache'
+      },
+      types: [
+        {
+          type: MARK_NOTIFICATION_REQUEST
+        },
+        {
+          type: MARK_NOTIFICATION_SUCCESS,
+          meta: { id }
+        },
+        {
+          type: MARK_NOTIFICATION_FAILURE
+        }
+      ]
+    }
+  };
+};
