@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     marginLeft: 15,
-    borderRadius: 15
+    borderRadius: 12.5
   },
   title: {
     flex: 1,
