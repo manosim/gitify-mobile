@@ -1,5 +1,10 @@
 import { CALL_API, isRSAA } from 'redux-api-middleware';
-import { FETCH_NOTIFICATIONS_REQUEST } from '../Actions';
+
+import {
+  FETCH_NOTIFICATIONS_REQUEST,
+  MARK_NOTIFICATION_REQUEST,
+  MARK_REPO_NOTIFICATION_REQUEST
+} from '../Actions';
 
 export default store => next => action => {
   if (!isRSAA(action)) {
@@ -14,8 +19,8 @@ export default store => next => action => {
     //   action[CALL_API].endpoint = endpoint + (settings.participating ? 'true' : 'false');
 
     case FETCH_NOTIFICATIONS_REQUEST:
-    // case MARK_NOTIFICATION_REQUEST:
-    // case MARK_REPO_NOTIFICATION_REQUEST:
+    case MARK_NOTIFICATION_REQUEST:
+    case MARK_REPO_NOTIFICATION_REQUEST:
       const token = 'token ' + store.getState().auth.get('token');
       action[CALL_API].headers['Authorization'] = token;
   }
