@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Dashboard extends Component {
+export default class LoginView extends Component {
   doOAuth() {
     const authUrl = [
       'https://github.com/login/oauth/authorize',

@@ -2,6 +2,7 @@ import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
 import { connect } from 'react-redux';
 
 import {
+  Alert,
   StyleSheet,
   Text,
   View
@@ -28,12 +29,27 @@ const styles = StyleSheet.create({
   }
 });
 
-class LoadingView extends Component {
+class SetUpView extends Component {
+  componentWillMount() {
+    // Alert.alert('loaded: ' + this.props.loaded);
+    // Alert.alert('isLoggedIn: ' + this.props.isLoggedIn);
+  }
+
   componentWillReceiveProps(nextProps) {
-    if (nextProps.loaded && nextProps.isLoggedIn) {
-      this.props.navigator.replace(Routes.Notifications());
-    } else if (nextProps.loaded && !nextProps.isLoggedIn) {
-      this.props.navigator.replace(Routes.Dashboard());
+    console.log('-----------------');
+    console.log(nextProps);
+    console.log('-----------------');
+
+    Alert.alert(JSON.stringify(nextProps));
+
+    if (nextProps.loaded !== this.props.loaded) {
+      if (nextProps.isLoggedIn) {
+        console.log('Loaded & Logged In');
+        this.props.navigator.replace(Routes.Notifications());
+      } else if (nextProps.loaded && !nextProps.isLoggedIn) {
+        console.log('Loaded & Logged OUT');
+        this.props.navigator.replace(Routes.LoginView());
+      }
     }
   }
 
@@ -55,4 +71,4 @@ function mapStateToProps(state) {
   };
 };
 
-export default connect(mapStateToProps, {})(LoadingView);
+export default connect(mapStateToProps, null)(SetUpView);

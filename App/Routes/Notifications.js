@@ -2,16 +2,18 @@ import _ from 'underscore';
 import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
 import { connect } from 'react-redux';
 
-import { fetchNotifications } from '../Actions';
+import { fetchNotifications, logout } from '../Actions';
 // import Constants from '../Utils/Constants';
 import Loading from '../Components/Loading';
 import RepositoryTitle from '../Components/RepositoryTitle';
+import Routes from '../Navigation/Routes';
 import Notification from '../Components/Notification';
 
 import {
   ListView,
   RefreshControl,
   StyleSheet,
+  TouchableHighlight,
   Text,
   View
 } from 'react-native';
@@ -112,9 +114,19 @@ class NotificationsView extends Component {
     return <Notification key={rowData.id} details={rowData} />;
   }
 
+  logout() {
+    this.props.logout();
+    this.props.navigator.replace(Routes.LoginView());
+  }
+
   render() {
     return (
       <View style={styles.container}>
+        <TouchableHighlight
+          onPress={() => this.logout()}
+          style={{padding: 10, backgroundColor: '#B0B0B0'}}>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Logout</Text>
+        </TouchableHighlight>
         <ListView
           style={styles.listContainer}
           dataSource={this.state.dataSource}
@@ -139,4 +151,4 @@ function mapStateToProps(state) {
   };
 };
 
-export default connect(mapStateToProps, { fetchNotifications })(NotificationsView);
+export default connect(mapStateToProps, { fetchNotifications, logout })(NotificationsView);

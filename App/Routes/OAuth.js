@@ -9,6 +9,7 @@ import {
 import { fetchToken } from '../Actions';
 import Constants from '../Utils/Constants';
 import Loading from '../Components/Loading';
+import Routes from '../Navigation/Routes';
 
 class OAuthView extends Component {
   static propTypes = {
@@ -17,7 +18,7 @@ class OAuthView extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.get('token')) {
-      this.props.navigator.pop();
+      this.props.navigator.resetTo(Routes.Notifications());
     }
   }
 

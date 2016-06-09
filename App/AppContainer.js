@@ -41,7 +41,7 @@ export default class AppContainer extends Component {
   }
 
   render() {
-    const initialRoute = Routes.Loading();
+    const initialRoute = Routes.SetUpView();
 
     return (
       <Provider store={store}>
