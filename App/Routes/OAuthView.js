@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-u
 import { connect } from 'react-redux';
 
 import {
-  AlertIOS,
+  Alert,
   WebView,
 } from 'react-native';
 
@@ -44,7 +44,7 @@ class OAuthView extends Component {
     }
 
     if (error) {
-      AlertIOS.alert('Trevor', 'Oops! Something went wrong and we couldn\'t log' +
+      Alert.alert('Gitify', 'Oops! Something went wrong and we couldn\'t log' +
         'you in. Please try again.');
     }
   }

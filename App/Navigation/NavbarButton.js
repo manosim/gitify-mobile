@@ -36,7 +36,7 @@ export default class NavigationButton extends Component {
       <View style={styles.container}>
         <TouchableHighlight
           style={styles.toolbarButton}
-          underlayColor={Constants.THEME_COLOR}
+          underlayColor={Constants.NAVBAR_BG}
           onPress={() => this._goToSettings()}>
           <Icon name="gear" style={styles.icon} />
         </TouchableHighlight>
