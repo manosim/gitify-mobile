@@ -23,6 +23,9 @@ export default function reducer(state = initialState, action) {
         .set('errored', true)
         .set('isFetching', false)
         .set('token', null);
+    case actions.LOGOUT:
+      return state
+        .set('token', null);
     default:
       return state;
   }

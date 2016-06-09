@@ -1,24 +1,24 @@
-import Dashboard from '../Routes/Dashboard';
-import LoadingView from '../Routes/LoadingView';
+import LoginView from '../Routes/LoginView';
+// import SetUpView from '../Routes/SetUpView';
 import NotificationsView from '../Routes/Notifications';
 import OAuthView from '../Routes/OAuth';
 
 export default {
 
-  Loading() {
+  SetUpView() {
     return {
-      id: 'loading-view',
-      title: 'Loading',
-      component: LoadingView,
+      id: 'setup-view',
+      title: 'Setting Up',
+      component: SetUpView,
       displayNavBar: false
     };
   },
 
-  Dashboard() {
+  LoginView() {
     return {
-      id: 'dashboard-view',
-      title: 'Dashboard',
-      component: Dashboard,
+      id: 'login-view',
+      title: 'Login',
+      component: LoginView,
       displayNavBar: false
     };
   },

@@ -38,6 +38,13 @@ export function fetchToken(data) {
   };
 };
 
+export const LOGOUT = 'LOGOUT';
+export function logout() {
+  return {
+    type: LOGOUT
+  };
+}
+
 
 // Notifications
 

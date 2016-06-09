@@ -14,8 +14,7 @@ export default function reducer(state = initialState, action) {
       if (action.meta.isReFetching) {
         return state
           .set('errored', false)
-          .set('isReFetching', true)
-          .set('response', []);
+          .set('isReFetching', true);
       } else {
         return state
           .set('errored', false)
