@@ -26,9 +26,15 @@ const styles = StyleSheet.create({
 });
 
 export default class NavigationButton extends Component {
+  _noDuplicatesPush(route) {
+    let routes = this.props.navigator.getCurrentRoutes();
+    if (routes[routes.length - 1].id !== route.id) {
+      this.props.navigator.push(route);
+    }
+  }
+
   _goToSettings() {
-    const route = Routes.SettingsView();
-    this.props.navigator.push(route);
+    this._noDuplicatesPush(Routes.SettingsView());
   }
 
   render() {
