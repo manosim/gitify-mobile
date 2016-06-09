@@ -37,6 +37,10 @@ export default function reducer(state = initialState, action) {
       const id = action.meta.id;
       return state
         .set('response', _.without(state.get('response'), _.findWhere(state.get('response'), {id})));
+    case actions.MARK_REPO_NOTIFICATION_SUCCESS:
+      const repoFullName = action.meta.repoFullName;
+      return state
+        .set('response', _.reject(state.get('response'), (obj) => obj.repository.full_name === repoFullName));
     default:
       return state;
   }

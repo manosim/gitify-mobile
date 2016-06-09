@@ -77,5 +77,4 @@ class Notification extends Component {
   };
 };
 
-
 export default connect(null, { markNotification })(Notification);

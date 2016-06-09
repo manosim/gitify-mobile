@@ -111,3 +111,35 @@ export function markNotification(id) {
     }
   };
 };
+
+
+// Repo's Notification
+
+export const MARK_REPO_NOTIFICATION_REQUEST = 'MARK_REPO_NOTIFICATION_REQUEST';
+export const MARK_REPO_NOTIFICATION_SUCCESS = 'MARK_REPO_NOTIFICATION_SUCCESS';
+export const MARK_REPO_NOTIFICATION_FAILURE = 'MARK_REPO_NOTIFICATION_FAILURE';
+export function markRepoNotifications(loginId, repoId, repoFullName) {
+  return {
+    [CALL_API]: {
+      endpoint: `https://api.github.com/repos/${loginId}/${repoId}/notifications`,
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({}),
+      types: [
+        {
+          type: MARK_REPO_NOTIFICATION_REQUEST
+        },
+        {
+          type: MARK_REPO_NOTIFICATION_SUCCESS,
+          meta: { repoFullName }
+        },
+        {
+          type: MARK_REPO_NOTIFICATION_FAILURE
+        }
+      ]
+    }
+  };
+};

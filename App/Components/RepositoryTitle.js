@@ -1,12 +1,15 @@
 import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Octicons';
 
+import { markRepoNotifications } from '../Actions';
 import Constants from '../Utils/Constants';
 
 import {
   Image,
   StyleSheet,
   Text,
+  TouchableHighlight,
   View
 } from 'react-native';
 
@@ -40,11 +43,18 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class RepositoryTitle extends Component {
+class RepositoryTitle extends Component {
 
   static propTypes = {
     details: PropTypes.object.isRequired
   };
+
+  markAsRead() {
+    const loginId = this.props.details.owner.login;
+    const repoId = this.props.details.name;
+    const fullName = this.props.details.full_name;
+    this.props.markRepoNotifications(loginId, repoId, fullName);
+  }
 
   render() {
     const details = this.props.details;
@@ -55,10 +65,14 @@ export default class RepositoryTitle extends Component {
         <View style={styles.titleBar}>
           <Image style={styles.avatar} source={{uri: avatar_url}} />
           <Text style={styles.title} numberOfLines={1}>{details.full_name}</Text>
-          <Icon name="check" style={styles.checkIcon} />
+          <TouchableHighlight
+            onPress={() => this.markAsRead()}>
+            <Icon name="check" style={styles.checkIcon} />
+          </TouchableHighlight>
         </View>
       </View>
     );
   };
-
 };
+
+export default connect(null, { markRepoNotifications })(RepositoryTitle);
