@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 
 import {
   Navigator,
-  StyleSheet,
-  Text
+  StyleSheet
 } from 'react-native';
 
 import Constants from './Utils/Constants';
@@ -45,44 +44,12 @@ class AppContainer extends Component {
     return Routes.LoginView();
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      time: Date.now()
-    };
-  }
-
-  componentWillMount() {
-    const self = this;
-    setTimeout(function() {
-      console.log('HSUSUSU');
-      self.setState({
-        time: Date.now()
-      });
-    }, 1000);
-  }
-
   render() {
-    // let hasLoaded = false;
-
-    // const handleChange = () => {
-    //   hasLoaded = store.getState().settings.get('loaded', false) !== false;
-    //   console.log(hasLoaded);
-    // };
-    // let unsubscribe = store.subscribe(handleChange);
-    // handleChange();
-
     if (!this.props.loaded) {
       return <SettingUp />;
     }
 
     const initialRoute = this._getInitialRoute();
-    // unsubscribe();
-
-    console.log(this.props);
-
-    // return <Text>{this.state.time} --- {`${this.props.loaded}`}</Text>;
-
     return (
       <Navigator
         initialRoute={initialRoute}
