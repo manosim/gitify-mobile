@@ -9,6 +9,7 @@ import {
 import Constants from './Utils/Constants';
 import NavigationBar from './Navigation/NavigationBar';
 import SceneContainer from './Navigation/SceneContainer';
+import SettingUp from './Components/SettingUp';
 import RouteMapper from './Navigation/RouteMapper';
 import Routes from './Navigation/Routes';
 
@@ -44,8 +45,11 @@ class AppContainer extends Component {
   }
 
   render() {
-    const initialRoute = this._getInitialRoute();
+    if (!this.props.loaded) {
+      return <SettingUp />;
+    }
 
+    const initialRoute = this._getInitialRoute();
     return (
       <Navigator
         initialRoute={initialRoute}
@@ -53,13 +57,13 @@ class AppContainer extends Component {
         navigationBar={<NavigationBar style={styles.navbar} routeMapper={RouteMapper} />} />
     );
   }
-}
+};
 
-
-const mapStateToProps = (state) => {
+function mapStateToProps(state) {
   return {
+    loaded: state.settings.get('loaded', false),
     isLoggedIn: state.auth.get('token') !== null
   };
 };
 
-export default connect(mapStateToProps, null) (AppContainer);
+export default connect(mapStateToProps, null)(AppContainer);
