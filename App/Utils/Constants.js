@@ -9,13 +9,15 @@ export default {
     scopes: ['user:email', 'notifications']
   },
 
+  BRAND_SUCCESS: '#5EBA7D',
+  BRAND_DANGER: '#B93936',
+
   THEME_PRIMARY: '#3F3F3F',
   THEME_PRIMARY_ACTIVE: '#000000',
   THEME_ALT: '#BFBFBF',
   THEME_ALT_ACTIVE: '#7F7F7F',
 
   REPO_TITLE_BG: '#EEE',
-
   BG_COLOR: '#F5FCFF',
 
   NAVBAR_BG: '#333',

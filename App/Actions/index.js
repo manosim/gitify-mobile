@@ -10,6 +10,15 @@ export function appLoaded() {
   };
 };
 
+export const UPDATE_SETTING = 'UPDATE_SETTING';
+export function updateSetting(setting, value) {
+  return {
+    type: UPDATE_SETTING,
+    setting: setting,
+    value: value
+  };
+};
+
 
 // Auth
 

@@ -30,7 +30,12 @@ export default class Button extends Component {
   static propTypes = {
     text: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    style: PropTypes.object
+  };
+
+  static defaultProps = {
+    style: {}
   };
 
   onPress() {
@@ -44,7 +49,7 @@ export default class Button extends Component {
 
     return (
       <TouchableHighlight
-        style={styles.button}
+        style={[styles.button, this.props.style]}
         disabled={this.props.disabled}
         underlayColor={Constants.THEME_ALT_ACTIVE}
         onPress={this.onPress.bind(this)}>
