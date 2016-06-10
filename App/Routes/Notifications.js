@@ -7,6 +7,7 @@ import AllRead from '../Components/AllRead';
 import Loading from '../Components/Loading';
 import RepositoryTitle from '../Components/RepositoryTitle';
 import Notification from '../Components/Notification';
+import Toolbar from '../Components/Toolbar';
 
 import {
   ListView,
@@ -122,6 +123,7 @@ class NotificationsView extends Component {
 
     return (
       <View style={styles.container}>
+        <Toolbar count={this.props.notifications.length} />
         <ListView
           style={styles.listContainer}
           dataSource={this.state.dataSource}
