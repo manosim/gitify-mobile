@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 5,
-    paddingVertical: 7.5,
+    paddingVertical: 5,
     borderBottomWidth: 1,
     borderBottomColor: Constants.THEME_ALT,
   },
@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     marginHorizontal: 10
+  },
+  iconWrapper: {
+    paddingVertical: 5,
+
   },
   checkIcon: {
     fontSize: 20,
@@ -69,6 +73,7 @@ class Notification extends Component {
         <Icon name={this._getTypeIcon()} style={styles.typeIcon} />
         <Text style={styles.title} numberOfLines={1}>{details.subject.title}</Text>
         <TouchableHighlight
+          style={styles.iconWrapper}
           onPress={() => this.markAsRead()}
           underlayColor={Constants.BG_COLOR}>
           <Icon name="check" style={styles.checkIcon} />
