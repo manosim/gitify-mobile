@@ -1,21 +1,18 @@
 import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
-import { Provider } from 'react-redux';
+import { connect } from 'react-redux';
 
 import {
   Navigator,
-  StyleSheet
+  StyleSheet,
+  Text
 } from 'react-native';
 
 import Constants from './Utils/Constants';
-import configureStore from './Store/configureStore';
 import NavigationBar from './Navigation/NavigationBar';
 import SceneContainer from './Navigation/SceneContainer';
 import SettingUp from './Components/SettingUp';
 import RouteMapper from './Navigation/RouteMapper';
 import Routes from './Navigation/Routes';
-
-// Create Store
-const store = configureStore();
 
 const styles = StyleSheet.create({
   navbar: {
@@ -25,7 +22,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class AppContainer extends Component {
+class AppContainer extends Component {
   renderScene(route, navigator) {
     return (
       <SceneContainer
@@ -42,29 +39,64 @@ export default class AppContainer extends Component {
   }
 
   _getInitialRoute() {
-    const isLoggedIn = store.getState().auth.get('token') !== null;
-    if (isLoggedIn) {
+    if (this.props.isLoggedIn) {
       return Routes.Notifications();
     }
     return Routes.LoginView();
   }
 
-  render() {
-    const hasLoaded = store.getState().settings.get('loaded') !== false;
+  constructor(props) {
+    super(props);
+    this.state = {
+      time: Date.now()
+    };
+  }
 
-    if (!hasLoaded) {
+  componentWillMount() {
+    const self = this;
+    setTimeout(function() {
+      console.log('HSUSUSU');
+      self.setState({
+        time: Date.now()
+      });
+    }, 1000);
+  }
+
+  render() {
+    // let hasLoaded = false;
+
+    // const handleChange = () => {
+    //   hasLoaded = store.getState().settings.get('loaded', false) !== false;
+    //   console.log(hasLoaded);
+    // };
+    // let unsubscribe = store.subscribe(handleChange);
+    // handleChange();
+
+    if (!this.props.loaded) {
       return <SettingUp />;
     }
 
     const initialRoute = this._getInitialRoute();
+    // unsubscribe();
+
+    console.log(this.props);
+
+    // return <Text>{this.state.time} --- {`${this.props.loaded}`}</Text>;
 
     return (
-      <Provider store={store}>
-        <Navigator
-          initialRoute={initialRoute}
-          renderScene={this.renderScene}
-          navigationBar={<NavigationBar style={styles.navbar} routeMapper={RouteMapper} />} />
-      </Provider>
+      <Navigator
+        initialRoute={initialRoute}
+        renderScene={this.renderScene}
+        navigationBar={<NavigationBar style={styles.navbar} routeMapper={RouteMapper} />} />
     );
   }
 };
+
+function mapStateToProps(state) {
+  return {
+    loaded: state.settings.get('loaded', false),
+    isLoggedIn: state.auth.get('token') !== null
+  };
+};
+
+export default connect(mapStateToProps, null)(AppContainer);
