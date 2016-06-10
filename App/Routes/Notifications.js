@@ -3,6 +3,7 @@ import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
 import { connect } from 'react-redux';
 
 import { fetchNotifications } from '../Actions';
+import AllRead from '../Components/AllRead';
 import Loading from '../Components/Loading';
 import RepositoryTitle from '../Components/RepositoryTitle';
 import Notification from '../Components/Notification';
@@ -111,6 +112,10 @@ class NotificationsView extends Component {
   }
 
   render() {
+    if (!this.props.notifications.length) {
+      return <AllRead />;
+    }
+
     return (
       <View style={styles.container}>
         <ListView
