@@ -1,5 +1,6 @@
 import _ from 'underscore';
 import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import Constants from '../Utils/Constants';
 
@@ -16,8 +17,9 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
   noItemsText: {
-    fontSize: 25,
-    fontWeight: '300'
+    fontSize: 28,
+    fontWeight: '300',
+    marginBottom: 5
   },
   noItemsTextSub: {
     fontSize: 18
@@ -28,6 +30,10 @@ var styles = StyleSheet.create({
 });
 
 export default class AllRead extends Component {
+  constructor(props) {
+    super(props);
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+  }
 
   render() {
     const message = _.sample(Constants.ALLREAD_MESSAGES);
