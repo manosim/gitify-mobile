@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 5,
     paddingVertical: 5,
+    backgroundColor: '#FFF',
     borderBottomWidth: 1,
     borderBottomColor: Constants.THEME_ALT,
   },
@@ -75,7 +76,7 @@ class Notification extends Component {
         <TouchableHighlight
           style={styles.iconWrapper}
           onPress={() => this.markAsRead()}
-          underlayColor={Constants.BG_COLOR}>
+          underlayColor="#FFF">
           <Icon name="check" style={styles.checkIcon} />
         </TouchableHighlight>
       </View>

@@ -17,8 +17,9 @@ export default {
   THEME_ALT: '#BFBFBF',
   THEME_ALT_ACTIVE: '#7F7F7F',
 
-  REPO_TITLE_BG: '#EEE',
   BG_COLOR: '#F5FCFF',
+  TOOLBAR_BG: '#555',
+  REPO_TITLE_BG: '#EEE',
 
   NAVBAR_BG: '#333',
   NAVBAR_HEIGHT: (Platform.OS === 'ios' ? 64 : 56),

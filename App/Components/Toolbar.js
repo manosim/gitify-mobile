@@ -6,13 +6,14 @@ import Constants from '../Utils/Constants';
 import {
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: '#ADB1B5',
+    backgroundColor: Constants.TOOLBAR_BG,
     alignItems: 'center',
     // justifyContent: 'center'
   },
@@ -33,6 +34,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
     paddingVertical: 10
+  },
+  textInput: {
+    flex: 1,
+    marginLeft: 5,
+    paddingHorizontal: 15,
+    color: '#FFF',
+    textAlign: 'right'
   }
 });
 
@@ -49,6 +57,14 @@ export default class Toolbar extends Component {
           <Icon name="inbox" style={styles.countIcon} />
           <Text style={styles.countText}>{this.props.count}</Text>
         </View>
+
+        <TextInput
+          style={styles.textInput}
+          onChangeText={(text) => {}}
+          value=""
+          placeholder="Search Repositories"
+          placeholderTextColor="#FFF"
+          returnKeyType="search" />
       </View>
     );
   }
