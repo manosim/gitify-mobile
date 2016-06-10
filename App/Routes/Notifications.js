@@ -112,8 +112,12 @@ class NotificationsView extends Component {
   }
 
   render() {
-    if (!this.props.notifications.length) {
-      return <AllRead />;
+    if (!this.props.notifications.length && !this.props.isFetching && !this.props.isReFetching) {
+      return (
+        <AllRead
+          isReFetching={this.props.isReFetching}
+          onPull={(isReFetching) => this.props.fetchNotifications(isReFetching)} />
+      );
     }
 
     return (
