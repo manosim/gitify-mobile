@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
-import { connect } from 'react-redux';
+import { Provider } from 'react-redux';
 
 import {
   Navigator,
@@ -7,10 +7,15 @@ import {
 } from 'react-native';
 
 import Constants from './Utils/Constants';
+import configureStore from './Store/configureStore';
 import NavigationBar from './Navigation/NavigationBar';
 import SceneContainer from './Navigation/SceneContainer';
+import SettingUp from './Components/SettingUp';
 import RouteMapper from './Navigation/RouteMapper';
 import Routes from './Navigation/Routes';
+
+// Create Store
+const store = configureStore();
 
 const styles = StyleSheet.create({
   navbar: {
@@ -20,7 +25,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class AppContainer extends Component {
+export default class AppContainer extends Component {
   renderScene(route, navigator) {
     return (
       <SceneContainer
@@ -37,29 +42,29 @@ class AppContainer extends Component {
   }
 
   _getInitialRoute() {
-    if (this.props.isLoggedIn) {
+    const isLoggedIn = store.getState().auth.get('token') !== null;
+    if (isLoggedIn) {
       return Routes.Notifications();
     }
     return Routes.LoginView();
   }
 
   render() {
+    const hasLoaded = store.getState().settings.get('loaded') !== false;
+
+    if (!hasLoaded) {
+      return <SettingUp />;
+    }
+
     const initialRoute = this._getInitialRoute();
 
     return (
-      <Navigator
-        initialRoute={initialRoute}
-        renderScene={this.renderScene}
-        navigationBar={<NavigationBar style={styles.navbar} routeMapper={RouteMapper} />} />
+      <Provider store={store}>
+        <Navigator
+          initialRoute={initialRoute}
+          renderScene={this.renderScene}
+          navigationBar={<NavigationBar style={styles.navbar} routeMapper={RouteMapper} />} />
+      </Provider>
     );
   }
-}
-
-
-const mapStateToProps = (state) => {
-  return {
-    isLoggedIn: state.auth.get('token') !== null
-  };
 };
-
-export default connect(mapStateToProps, null) (AppContainer);
