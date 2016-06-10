@@ -123,7 +123,9 @@ class NotificationsView extends Component {
 
     return (
       <View style={styles.container}>
-        <Toolbar count={this.props.notifications.length} />
+        <Toolbar
+          count={this.props.notifications.length}
+          query={this.props.query} />
         <ListView
           style={styles.listContainer}
           dataSource={this.state.dataSource}
@@ -144,7 +146,8 @@ function mapStateToProps(state) {
   return {
     isFetching: state.notifications.get('isFetching'),
     isReFetching: state.notifications.get('isReFetching'),
-    notifications: state.notifications.get('response', [])
+    notifications: state.notifications.get('response', []),
+    query: state.search.get('query')
   };
 };
 

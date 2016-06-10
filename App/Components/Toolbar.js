@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';  // eslint-disable-line no-unused-vars
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Octicons';
 
+import { searchNotifications } from '../Actions';
 import Constants from '../Utils/Constants';
 
 import {
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Toolbar extends Component {
+class Toolbar extends Component {
 
   static propTypes = {
     count: PropTypes.number.isRequired
@@ -60,12 +62,16 @@ export default class Toolbar extends Component {
 
         <TextInput
           style={styles.textInput}
-          onChangeText={(text) => {}}
-          value=""
+          onChangeText={(text) => this.props.searchNotifications(text)}
+          value={this.props.query}
           placeholder="Search Repositories"
           placeholderTextColor="#FFF"
+          autoCapitalize="none"
+          autoCorrect={false}
           returnKeyType="search" />
       </View>
     );
   }
 }
+
+export default connect(null, { searchNotifications })(Toolbar);

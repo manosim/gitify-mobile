@@ -152,3 +152,21 @@ export function markRepoNotifications(loginId, repoId, repoFullName) {
     }
   };
 };
+
+
+// Search
+
+export const SEARCH_NOTIFICATIONS = 'SEARCH_NOTIFICATIONS';
+export function searchNotifications(query) {
+  return {
+    type: SEARCH_NOTIFICATIONS,
+    query: query
+  };
+};
+
+export const CLEAR_SEARCH = 'CLEAR_SEARCH';
+export function clearSearch() {
+  return {
+    type: CLEAR_SEARCH
+  };
+};
