@@ -39,7 +39,7 @@ export default class Setting extends Component {
         <Switch
           onValueChange={(value) => this.props.onChange(value)}
           onTintColor={Constants.BRAND_SUCCESS}
-          tintColor={Constants.BRAND_DANGER}
+          tintColor={Constants.THEME_ALT}
           value={this.props.value} />
       </View>
     );

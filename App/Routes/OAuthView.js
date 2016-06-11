@@ -3,13 +3,21 @@ import { connect } from 'react-redux';
 
 import {
   Alert,
+  StyleSheet,
   WebView,
+  View
 } from 'react-native';
 
 import { fetchToken } from '../Actions';
 import Constants from '../Utils/Constants';
 import Loading from '../Components/Loading';
 import Routes from '../Navigation/Routes';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+});
 
 class OAuthView extends Component {
   static propTypes = {
@@ -50,16 +58,16 @@ class OAuthView extends Component {
   }
 
   render() {
-    if (this.props.auth.get('isFetching') || this.props.auth.get('token')) {
-      return <Loading text="Auth" />;
-    }
-
     return (
-      <WebView
-        source={{uri: this.props.authUrl}}
-        onNavigationStateChange={this.onNavigationStateChange.bind(this)}
-        automaticallyAdjustContentInsets={true}
-        startInLoadingState={true} />
+      <View style={styles.container}>
+        <WebView
+          style={styles.container}
+          source={{uri: this.props.authUrl}}
+          onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+          automaticallyAdjustContentInsets={true}
+          startInLoadingState={true} />
+        <Loading isLoading={this.props.auth.get('isFetching')} text="Authentication" />
+      </View>
     );
   }
 };

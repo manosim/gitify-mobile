@@ -7,6 +7,7 @@ import filter from 'redux-storage-decorator-filter';
 import { FETCH_TOKEN_SUCCESS, LOGOUT, UPDATE_SETTING, appLoaded } from '../Actions';
 import Constants from '../Utils/Constants';
 import requestsMiddleware from '../Middleware/Requests';
+import soundMiddleware from '../Middleware/Sound';
 import rootReducer from '../Reducers';
 
 const engine = filter(createEngine(Constants.STORAGE_KEY), ['auth', 'settings'], [['settings', 'loaded']]);
@@ -14,7 +15,8 @@ const storeMiddleware = storage.createMiddleware(engine, [], [FETCH_TOKEN_SUCCES
 const middlewares = [
   requestsMiddleware, // Should be passed before 'apiMiddleware'
   apiMiddleware,
-  storeMiddleware
+  storeMiddleware,
+  soundMiddleware
 ];
 
 if (process.env.NODE_ENV === 'development') {
