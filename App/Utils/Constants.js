@@ -39,15 +39,15 @@ export default {
   ],
 
   ALLREAD_EMOJIS: [
-    '😉',
-    '🎉',
-    '🐯',
-    '🙈',
-    '🎈',
-    '🎊',
-    '👏',
-    '🎪',
-    '🍝',
+    '😉', '🎉', '🐯', '🙈',
+    '🎈', '🎊', '👏', '🎪'
+  ],
+
+  HINTS: [
+    'Gitify is also avaible on OSX. Both desktop & mobile apps are 100% open-source!',
+    'You can just "Pull To Refresh" when you are in the notifications page.',
+    'Want to view notifications only for things you participate? Try the settings page!',
+    'There is a setting for playing a sound when you get a new notification - even on refresh.'
   ],
 
   ERROR_EMOJIS: [
