@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
-import Icon from 'react-native-vector-icons/FontAwesome';
 
+import ButtonBrowser from '../Components/ButtonBrowser';
 import Constants from '../Utils/Constants';
 
 import {
@@ -18,13 +18,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     backgroundColor: Constants.TOOLBAR_BG,
-  },
-  toolbarIcon: {
-    marginHorizontal: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    fontSize: 24,
-    color: '#FFF'
   },
   toolbarLeft: {
     flex: .5,
@@ -45,22 +38,35 @@ export default class GithubView extends Component {
     url: PropTypes.string.isRequired
   };
 
+  goBack() {
+    this.refs.browser.goBack();
+  }
+
+  goForward() {
+    this.refs.browser.goForward();
+  }
+
+  reload() {
+    this.refs.browser.reload();
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <WebView
+          ref="browser"
           source={{uri: this.props.url}}
           automaticallyAdjustContentInsets={true}
           startInLoadingState={true} />
 
         <View style={styles.toolbar}>
           <View style={styles.toolbarLeft}>
-            <Icon name="chevron-left" style={styles.toolbarIcon} />
-            <Icon name="chevron-right" style={styles.toolbarIcon} />
+            <ButtonBrowser icon="chevron-left" onPress={() => this.goBack()} />
+            <ButtonBrowser icon="chevron-right" onPress={() => this.goForward()} />
           </View>
 
           <View style={styles.toolbarRight}>
-            <Icon name="refresh" style={styles.toolbarIcon} />
+            <ButtonBrowser icon="refresh" onPress={() => this.reload()} />
           </View>
         </View>
       </View>
