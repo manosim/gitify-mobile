@@ -41,6 +41,11 @@ class SettingsView extends Component {
             value={this.props.settings.get('participating')}
             onChange={(value) => this.props.updateSetting('participating', value)} />
 
+          <Setting
+            title="Play Sound"
+            value={this.props.settings.get('playSound')}
+            onChange={(value) => this.props.updateSetting('playSound', value)} />
+
           <Button style={{marginVertical: 20}} onPress={() => this.logout()} text="Logout" />
         </View>
 
