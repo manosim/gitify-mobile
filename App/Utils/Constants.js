@@ -9,6 +9,9 @@ export default {
     scopes: ['user:email', 'notifications']
   },
 
+  WEBSITE_URL: 'http://www.gitify.io/',
+  REPO_URL: 'https://github.com/ekonstantinidis/gitify-mobile',
+
   BRAND_SUCCESS: '#5EBA7D',
   BRAND_DANGER: '#B93936',
 
