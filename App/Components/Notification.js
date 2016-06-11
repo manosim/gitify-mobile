@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Octicons';
 
 import { markNotification } from '../Actions';
 import Constants from '../Utils/Constants';
+import Routes from '../Navigation/Routes';
 
 import {
   StyleSheet,
@@ -66,13 +67,30 @@ class Notification extends Component {
     this.props.markNotification(this.props.details.id);
   }
 
+  openNotification() {
+    let url = this.props.details.subject.url.replace('api.github.com/repos', 'www.github.com');
+    if (url.indexOf('/pulls/') !== -1) {
+      url = url.replace('/pulls/', '/pull/');
+    }
+
+    const route = Routes.GithubView({ url });
+    this.props.navigator.push(route);
+  }
+
   render() {
     const details = this.props.details;
 
     return (
       <View style={styles.container}>
         <Icon name={this._getTypeIcon()} style={styles.typeIcon} />
-        <Text style={styles.title} numberOfLines={1}>{details.subject.title}</Text>
+
+        <TouchableHighlight
+          style={{flex: 1}}
+          onPress={() => this.openNotification()}
+          underlayColor="#FFF">
+          <Text style={styles.title} numberOfLines={1}>{details.subject.title}</Text>
+        </TouchableHighlight>
+
         <TouchableHighlight
           style={styles.iconWrapper}
           onPress={() => this.markAsRead()}

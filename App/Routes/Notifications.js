@@ -140,7 +140,7 @@ class NotificationsView extends Component {
   }
 
   _renderRow(rowData) {
-    return <Notification key={rowData.id} details={rowData} />;
+    return <Notification key={rowData.id} details={rowData} navigator={this.props.navigator} />;
   }
 
   render() {

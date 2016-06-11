@@ -2,6 +2,7 @@ import LoginView from '../Routes/LoginView';
 import SettingsView from '../Routes/SettingsView';
 import NotificationsView from '../Routes/Notifications';
 import OAuthView from '../Routes/OAuthView';
+import GithubView from '../Routes/GithubView';
 
 export default {
   LoginView() {
@@ -38,6 +39,16 @@ export default {
       id: 'settings-view',
       title: 'Settings',
       component: SettingsView,
+      passProps: props,
+      displayNavBar: true
+    };
+  },
+
+  GithubView(props) {
+    return {
+      id: 'github-view',
+      title: 'GitHub',
+      component: GithubView,
       passProps: props,
       displayNavBar: true
     };
