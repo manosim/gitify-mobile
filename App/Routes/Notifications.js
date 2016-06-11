@@ -47,23 +47,14 @@ class NotificationsView extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.notifications !== this.props.notifications) {
-      const { dataBlob, sectionIDs, rowIDs } = this.transformData(nextProps.notifications);
-
-      this.setState({
-        dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs)
-      });
+      this.transformData(nextProps.notifications);
     }
 
     if (nextProps.query !== this.props.query) {
       const notifications = nextProps.query ?
         _.filter(this.props.notifications, this.matchesSearchTerm.bind(this)) : this.props.notifications;
 
-      const { dataBlob, sectionIDs, rowIDs } = this.transformData(notifications);
-
-      this.setState({
-        dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs)
-      });
-
+      this.transformData(notifications);
     }
   }
 
@@ -124,11 +115,9 @@ class NotificationsView extends Component {
       }
     }
 
-    return {
-      dataBlob,
-      sectionIDs,
-      rowIDs
-    };
+    this.setState({
+      dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs)
+    });
   }
 
   _renderSectionHeader(sectionData, sectionID) {
