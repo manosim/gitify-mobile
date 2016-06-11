@@ -169,9 +169,7 @@ class NotificationsView extends Component {
 
     return (
       <View style={styles.container}>
-        <Toolbar
-          count={this.props.notifications.length}
-          query={this.props.query} />
+        {this.props.isReFetching && !this.props.notifications.length ? null : <Toolbar count={this.props.notifications.length} query={this.props.query} />}
         <ListView
           style={styles.listContainer}
           dataSource={this.state.dataSource}
