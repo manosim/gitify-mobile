@@ -152,7 +152,7 @@ class NotificationsView extends Component {
               refreshing={this.props.isReFetching}
               onRefresh={() => this.props.fetchNotifications(true)} />
           } />
-        <Loading isLoading={this.props.isFetching} />
+        <Loading isLoading={this.props.isFetching} text="Notifications" />
       </View>
     );
   }
