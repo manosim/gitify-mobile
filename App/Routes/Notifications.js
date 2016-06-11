@@ -3,20 +3,37 @@ import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
 import { connect } from 'react-redux';
 
 import { fetchNotifications } from '../Actions';
+import AllRead from '../Components/AllRead';
 import Loading from '../Components/Loading';
 import RepositoryTitle from '../Components/RepositoryTitle';
 import Notification from '../Components/Notification';
+import Toolbar from '../Components/Toolbar';
 
 import {
   ListView,
   RefreshControl,
   StyleSheet,
+  Text,
   View
 } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  noResultsWrapper: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  noResultsTitle: {
+    fontSize: 28,
+    fontWeight: '300',
+    marginBottom: 5
+  },
+  noResultsDesc: {
+    fontSize: 18,
+    textAlign: 'center'
   }
 });
 
@@ -45,15 +62,14 @@ class NotificationsView extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.notifications !== this.props.notifications) {
-      const response = _.chain(nextProps.notifications)
-        .groupBy((object) => object.repository.full_name)
-        .map((notifications, repository) => ({
-          id: notifications[0].repository.id,
-          repository: notifications[0].repository,
-          notifications }))
-        .value();
+      this.transformData(nextProps.notifications);
+    }
 
-      this.transformData(response);
+    if (nextProps.query !== this.props.query) {
+      const notifications = nextProps.query ?
+        _.filter(this.props.notifications, this.matchesSearchTerm.bind(this)) : this.props.notifications;
+
+      this.transformData(notifications);
     }
   }
 
@@ -61,9 +77,26 @@ class NotificationsView extends Component {
     this.props.fetchNotifications(false);
   }
 
-  transformData(repositories) {
-    // Thanks to: http://moduscreate.com/react-native-listview-with-section-headers/
+  areIn(repoFullName, searchTerm) {
+    return repoFullName.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0;
+  }
 
+  matchesSearchTerm(obj) {
+    const searchTerm = this.props.query.replace(/^\s+/, '').replace(/\s+$/, '');
+    const searchTerms = searchTerm.split(/\s+/);
+    return _.all(searchTerms, this.areIn.bind(null, obj.repository.full_name));
+  }
+
+  transformData(notificationsPayload) {
+    const repositories = _.chain(notificationsPayload)
+      .groupBy((object) => object.repository.full_name)
+      .map((notifications, repository) => ({
+        id: notifications[0].repository.id,
+        repository: notifications[0].repository,
+        notifications }))
+          .value();
+
+    // Thanks to: http://moduscreate.com/react-native-listview-with-section-headers/
     var repositoriesLength = repositories.length;
     var repository;
     var notification;
@@ -98,7 +131,7 @@ class NotificationsView extends Component {
     }
 
     this.setState({
-      dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs),
+      dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs)
     });
   }
 
@@ -111,8 +144,34 @@ class NotificationsView extends Component {
   }
 
   render() {
+    if (!this.state.dataSource.getRowCount() && this.props.query) {
+      return (
+        <View style={styles.container}>
+          <Toolbar
+            count={this.props.notifications.length}
+            query={this.props.query} />
+          <View style={styles.noResultsWrapper}>
+            <Text style={styles.noResultsTitle}>No Search Results.</Text>
+            <Text style={styles.noResultsDesc}>No Organisations or Repositories{'\n'}match your search term.</Text>
+          </View>
+        </View>
+      );
+    }
+
+    if (!this.props.notifications.length && !this.props.query
+      && !this.props.isFetching && !this.props.isReFetching) {
+      return (
+        <AllRead
+          isReFetching={this.props.isReFetching}
+          onPull={(isReFetching) => this.props.fetchNotifications(isReFetching)} />
+      );
+    }
+
     return (
       <View style={styles.container}>
+        <Toolbar
+          count={this.props.notifications.length}
+          query={this.props.query} />
         <ListView
           style={styles.listContainer}
           dataSource={this.state.dataSource}
@@ -123,7 +182,7 @@ class NotificationsView extends Component {
               refreshing={this.props.isReFetching}
               onRefresh={() => this.props.fetchNotifications(true)} />
           } />
-        <Loading isLoading={this.props.isFetching} />
+        <Loading isLoading={this.props.isFetching} text="Notifications" />
       </View>
     );
   }
@@ -133,7 +192,8 @@ function mapStateToProps(state) {
   return {
     isFetching: state.notifications.get('isFetching'),
     isReFetching: state.notifications.get('isReFetching'),
-    notifications: state.notifications.get('response', [])
+    notifications: state.notifications.get('response', []),
+    query: state.search.get('query')
   };
 };
 

@@ -7,16 +7,19 @@ import {
   View
 } from 'react-native';
 
-import { logout } from '../Actions';
+import { logout, updateSetting } from '../Actions';
 import Button from '../Components/Button';
 import Routes from '../Navigation/Routes';
+import Setting from '../Components/Setting';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingVertical: 20,
-    alignItems: 'center',
-    justifyContent: 'space-between'
+    paddingHorizontal: 20
+  },
+  settingsWrapper: {
+    flex: 1
   },
   footerText: {
     textAlign: 'center'
@@ -32,17 +35,27 @@ class SettingsView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.footerText}>Settings</Text>
+        <View style={styles.settingsWrapper}>
+          <Setting
+            title="Participating"
+            value={this.props.settings.get('participating')}
+            onChange={(value) => this.props.updateSetting('participating', value)} />
 
-        <Button onPress={() => this.logout()} text="Logout" />
-
-        <View>
-          <Text style={styles.footerText}>Made with ❤ in Brighton.</Text>
-          <Text style={styles.footerText}>Copyright (c) 2016 Emmanouil Konstantinidis</Text>
+          <Button style={{marginVertical: 20}} onPress={() => this.logout()} text="Logout" />
         </View>
+
+        <Text style={styles.footerText}>Made with ❤ in Brighton.</Text>
+        <Text style={styles.footerText}>Copyright (c) 2016 Emmanouil Konstantinidis</Text>
       </View>
     );
   }
 };
 
-export default connect(null, { logout })(SettingsView);
+
+function mapStateToProps(state) {
+  return {
+    settings: state.settings
+  };
+};
+
+export default connect(mapStateToProps, { logout, updateSetting })(SettingsView);

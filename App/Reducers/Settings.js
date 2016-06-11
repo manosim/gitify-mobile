@@ -2,7 +2,8 @@ import { Map } from 'immutable';
 import * as actions from '../Actions';
 
 const initialState = Map({
-  loaded: false
+  loaded: false,
+  participating: false
 });
 
 export default function reducer(state = initialState, action) {
@@ -10,6 +11,9 @@ export default function reducer(state = initialState, action) {
     case actions.APP_LOADED:
       return state
         .set('loaded', true);
+    case actions.UPDATE_SETTING:
+      return state
+        .set(action.setting, action.value);
     default:
       return state;
   }

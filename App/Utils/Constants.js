@@ -9,17 +9,49 @@ export default {
     scopes: ['user:email', 'notifications']
   },
 
+  BRAND_SUCCESS: '#5EBA7D',
+  BRAND_DANGER: '#B93936',
+
   THEME_PRIMARY: '#3F3F3F',
   THEME_PRIMARY_ACTIVE: '#000000',
   THEME_ALT: '#BFBFBF',
   THEME_ALT_ACTIVE: '#7F7F7F',
 
-  REPO_TITLE_BG: '#EEE',
-
   BG_COLOR: '#F5FCFF',
+  TOOLBAR_BG: '#555',
+  REPO_TITLE_BG: '#EEE',
 
   NAVBAR_BG: '#333',
   NAVBAR_HEIGHT: (Platform.OS === 'ios' ? 64 : 56),
   NAVBAR_BUTTON_ICON_SIZE: 32,
-  BASE_BORDER_RADIUS: 5
+  BASE_BORDER_RADIUS: 5,
+
+  // Awesome all read messages
+  ALLREAD_MESSAGES: [
+    'Wow! You did it.',
+    'That\'s amazing!',
+    'Yes! All read.',
+    'All gone! Nice work!',
+    'Yay! Good news.',
+  ],
+
+  ALLREAD_EMOJIS: [
+    '😉',
+    '🎉',
+    '🐯',
+    '🙈',
+    '🎈',
+    '🎊',
+    '👏',
+    '🎪',
+    '🍝',
+  ],
+
+  ERROR_EMOJIS: [
+    ':pensive:',
+    ':disappointed:',
+    ':triumph:',
+    ':scream:',
+    ':cry:'
+  ]
 };
