@@ -1,7 +1,7 @@
 import { Map } from 'immutable';
 
 import {
-  SEARCH_NOTIFICATIONS, CLEAR_SEARCH
+  SEARCH_NOTIFICATIONS, CLEAR_SEARCH, FETCH_NOTIFICATIONS_REQUEST
 } from '../Actions';
 
 const initialState = Map({
@@ -14,6 +14,7 @@ export default function reducer(state = initialState, action) {
       return state
         .set('query', action.query);
     case CLEAR_SEARCH:
+    case FETCH_NOTIFICATIONS_REQUEST:
       return state
         .set('query', '');
     default:

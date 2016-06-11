@@ -47,15 +47,23 @@ class NotificationsView extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.notifications !== this.props.notifications) {
-      const response = _.chain(nextProps.notifications)
-        .groupBy((object) => object.repository.full_name)
-        .map((notifications, repository) => ({
-          id: notifications[0].repository.id,
-          repository: notifications[0].repository,
-          notifications }))
-        .value();
+      const { dataBlob, sectionIDs, rowIDs } = this.transformData(nextProps.notifications);
 
-      this.transformData(response);
+      this.setState({
+        dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs)
+      });
+    }
+
+    if (nextProps.query !== this.props.query) {
+      const notifications = nextProps.query ?
+        _.filter(this.props.notifications, this.matchesSearchTerm.bind(this)) : this.props.notifications;
+
+      const { dataBlob, sectionIDs, rowIDs } = this.transformData(notifications);
+
+      this.setState({
+        dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs)
+      });
+
     }
   }
 
@@ -63,9 +71,26 @@ class NotificationsView extends Component {
     this.props.fetchNotifications(false);
   }
 
-  transformData(repositories) {
-    // Thanks to: http://moduscreate.com/react-native-listview-with-section-headers/
+  areIn(repoFullName, searchTerm) {
+    return repoFullName.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0;
+  }
 
+  matchesSearchTerm(obj) {
+    const searchTerm = this.props.query.replace(/^\s+/, '').replace(/\s+$/, '');
+    const searchTerms = searchTerm.split(/\s+/);
+    return _.all(searchTerms, this.areIn.bind(null, obj.repository.full_name));
+  }
+
+  transformData(notificationsPayload) {
+    const repositories = _.chain(notificationsPayload)
+      .groupBy((object) => object.repository.full_name)
+      .map((notifications, repository) => ({
+        id: notifications[0].repository.id,
+        repository: notifications[0].repository,
+        notifications }))
+          .value();
+
+    // Thanks to: http://moduscreate.com/react-native-listview-with-section-headers/
     var repositoriesLength = repositories.length;
     var repository;
     var notification;
@@ -99,9 +124,11 @@ class NotificationsView extends Component {
       }
     }
 
-    this.setState({
-      dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs),
-    });
+    return {
+      dataBlob,
+      sectionIDs,
+      rowIDs
+    };
   }
 
   _renderSectionHeader(sectionData, sectionID) {
