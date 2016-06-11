@@ -2,12 +2,15 @@ import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-u
 import { connect } from 'react-redux';
 
 import {
+  Linking,
   StyleSheet,
   Text,
+  TouchableHighlight,
   View
 } from 'react-native';
 
 import { logout, updateSetting } from '../Actions';
+import Constants from '../Utils/Constants';
 import Button from '../Components/Button';
 import Routes from '../Navigation/Routes';
 import Setting from '../Components/Setting';
@@ -20,6 +23,14 @@ const styles = StyleSheet.create({
   },
   settingsWrapper: {
     flex: 1
+  },
+  footerButton: {
+    alignSelf: 'center',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginVertical: 20,
+    borderRadius: 5,
+    borderWidth: 1,
   },
   footerText: {
     textAlign: 'center'
@@ -49,6 +60,14 @@ class SettingsView extends Component {
           <Button style={{marginVertical: 20}} onPress={() => this.logout()} text="Logout" />
         </View>
 
+        <TouchableHighlight
+          onPress={() => Linking.openURL(Constants.WEBSITE_URL)}
+          underlayColor={Constants.BG_COLOR}
+          style={styles.footerButton}>
+          <Text style={styles.footerText}>www.gitify.io</Text>
+        </TouchableHighlight>
+
+        <Text style={styles.footerText}>Available on OSX, iOS and Android.</Text>
         <Text style={styles.footerText}>Made with ❤ in Brighton.</Text>
         <Text style={styles.footerText}>Copyright (c) 2016 Emmanouil Konstantinidis</Text>
       </View>

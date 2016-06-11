@@ -20,19 +20,36 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center'
   },
-  noItemsWrapper: {
+  wrapper: {
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center'
   },
-  noItemsText: {
+  footerWrapper: {
+    padding: 20
+  },
+  heading: {
     fontSize: 28,
     fontWeight: '300',
     marginBottom: 5,
   },
-  noItemsTextSub: {
+  subheading: {
     fontSize: 18
   },
-  noItemsEmoji: {
+  emoji: {
     fontSize: 44,
+  },
+  hintTitle: {
+    fontSize: 14,
+    fontWeight: '500',
+    marginTop: 50,
+    marginBottom: 10,
+    textAlign: 'center'
+  },
+  hint: {
+    marginHorizontal: 30,
+    fontSize: 13,
+    textAlign: 'center'
   }
 });
 
@@ -45,6 +62,7 @@ export default class AllRead extends Component {
   render() {
     const message = _.sample(Constants.ALLREAD_MESSAGES);
     const emoji = _.sample(Constants.ALLREAD_EMOJIS);
+    const hint = _.sample(Constants.HINTS);
 
     return (
       <ScrollView
@@ -55,10 +73,15 @@ export default class AllRead extends Component {
             refreshing={this.props.isReFetching}
             onRefresh={() => this.props.onPull(true)} />
         }>
-        <View style={styles.noItemsWrapper}>
-          <Text style={styles.noItemsText}>{message}</Text>
-          <Text style={styles.noItemsTextSub}>No new notifications.</Text>
-          <Text style={styles.noItemsEmoji}>{emoji}</Text>
+        <View style={styles.wrapper}>
+          <Text style={styles.heading}>{message}</Text>
+          <Text style={styles.subheading}>No new notifications.</Text>
+          <Text style={styles.emoji}>{emoji}</Text>
+        </View>
+
+        <View style={styles.footerWrapper}>
+          <Text style={styles.hintTitle}>Hint</Text>
+          <Text style={styles.hint}>{hint}</Text>
         </View>
       </ScrollView>
     );
