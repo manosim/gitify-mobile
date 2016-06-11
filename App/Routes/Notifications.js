@@ -13,12 +13,27 @@ import {
   ListView,
   RefreshControl,
   StyleSheet,
+  Text,
   View
 } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  noResultsWrapper: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  noResultsTitle: {
+    fontSize: 28,
+    fontWeight: '300',
+    marginBottom: 5
+  },
+  noResultsDesc: {
+    fontSize: 18,
+    textAlign: 'center'
   }
 });
 
@@ -129,7 +144,22 @@ class NotificationsView extends Component {
   }
 
   render() {
-    if (!this.props.notifications.length && !this.props.isFetching && !this.props.isReFetching) {
+    if (!this.state.dataSource.getRowCount() && this.props.query) {
+      return (
+        <View style={styles.container}>
+          <Toolbar
+            count={this.props.notifications.length}
+            query={this.props.query} />
+          <View style={styles.noResultsWrapper}>
+            <Text style={styles.noResultsTitle}>No Search Results.</Text>
+            <Text style={styles.noResultsDesc}>No Organisations or Repositories{'\n'}match your search term.</Text>
+          </View>
+        </View>
+      );
+    }
+
+    if (!this.props.notifications.length && !this.props.query
+      && !this.props.isFetching && !this.props.isReFetching) {
       return (
         <AllRead
           isReFetching={this.props.isReFetching}
