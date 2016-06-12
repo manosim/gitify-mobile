@@ -12,9 +12,6 @@ import {
 } from 'react-native';
 
 const styles = StyleSheet.create({
-  containerWrapper: {
-    flex: 1,
-  },
   container: {
     flex: 1,
     justifyContent: 'center'
@@ -76,7 +73,7 @@ export default class AllRead extends Component {
     const hint = _.sample(Constants.HINTS);
 
     return (
-      <View style={styles.containerWrapper}>
+      <View style={styles.container}>
         <View style={styles.wrapper}>
           <Text style={styles.heading}>{message}</Text>
           <Text style={styles.subheading}>No new notifications.</Text>
