@@ -51,10 +51,7 @@ export default {
   ],
 
   ERROR_EMOJIS: [
-    ':pensive:',
-    ':disappointed:',
-    ':triumph:',
-    ':scream:',
-    ':cry:'
+    '😔', '😞', '😥',
+    '😤', '😱', '🙄'
   ]
 };

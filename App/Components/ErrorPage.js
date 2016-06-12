@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class AllRead extends Component {
+export default class ErrorPage extends Component {
   static propTypes = {
     onReload: PropTypes.func.isRequired
   };
@@ -71,15 +71,15 @@ export default class AllRead extends Component {
   }
 
   render() {
-    const message = _.sample(Constants.ALLREAD_MESSAGES);
-    const emoji = _.sample(Constants.ALLREAD_EMOJIS);
+    const emoji = _.sample(Constants.ERROR_EMOJIS);
     const hint = _.sample(Constants.HINTS);
 
     return (
-      <View style={styles.containerWrapper}>
+      <View style={styles.containerWrapper}
+        contentContainerStyle={styles.container}>
         <View style={styles.wrapper}>
-          <Text style={styles.heading}>{message}</Text>
-          <Text style={styles.subheading}>No new notifications.</Text>
+          <Text style={styles.heading}>Oops something went wrong.</Text>
+          <Text style={styles.subheading}>Couldn't get your notifications.</Text>
           <Text style={styles.emoji}>{emoji}</Text>
           <TouchableHighlight
             style={styles.button}
