@@ -80,6 +80,7 @@ export default class AllRead extends Component {
           <Text style={styles.emoji}>{emoji}</Text>
           <TouchableHighlight
             style={styles.button}
+            underlayColor={Constants.BG_COLOR}
             onPress={() => this.props.onReload()}>
             <Text>Reload</Text>
           </TouchableHighlight>

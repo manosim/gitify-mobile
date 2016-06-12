@@ -7,6 +7,7 @@ import Constants from '../Utils/Constants';
 import Routes from '../Navigation/Routes';
 
 import {
+  Linking,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -73,8 +74,12 @@ class Notification extends Component {
       url = url.replace('/pulls/', '/pull/');
     }
 
-    const route = Routes.GithubView({ url });
-    this.props.navigator.push(route);
+    if (this.props.inBrowser) {
+      Linking.openURL(url);
+    } else {
+      const route = Routes.GithubView({ url });
+      this.props.navigator.push(route);
+    }
   }
 
   render() {
@@ -102,4 +107,10 @@ class Notification extends Component {
   };
 };
 
-export default connect(null, { markNotification })(Notification);
+function mapStateToProps(state) {
+  return {
+    inBrowser: state.settings.get('inBrowser')
+  };
+};
+
+export default connect(mapStateToProps, { markNotification })(Notification);

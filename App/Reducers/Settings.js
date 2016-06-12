@@ -4,7 +4,8 @@ import * as actions from '../Actions';
 const initialState = Map({
   loaded: false,
   participating: false,
-  playSound: false
+  playSound: false,
+  inBrowser: false
 });
 
 export default function reducer(state = initialState, action) {
