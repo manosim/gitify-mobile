@@ -15,9 +15,11 @@ var styles = StyleSheet.create({
     paddingVertical: 10,
   },
   icon: {
-
     fontSize: 24,
     color: '#FFF'
+  },
+  disabledIcon: { // eslint-disable-line react-native/no-unused-styles
+    color: 'rgba(255, 255, 255, .5)'
   }
 });
 
@@ -41,6 +43,7 @@ export default class ButtonBrowser extends Component {
   }
 
   render() {
+    const iconStyles = this.props.disabled ? styles.disabledIcon : {};
 
     return (
       <TouchableHighlight
@@ -48,7 +51,7 @@ export default class ButtonBrowser extends Component {
         disabled={this.props.disabled}
         underlayColor={Constants.TOOLBAR_BG}
         onPress={() => this.onPress()}>
-          <Icon name={this.props.icon} style={styles.icon} />
+          <Icon name={this.props.icon} style={[styles.icon, iconStyles]} />
       </TouchableHighlight>
     );
   };

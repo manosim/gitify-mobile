@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { fetchNotifications } from '../Actions';
 import AllRead from '../Components/AllRead';
+import ErrorPage from '../Components/ErrorPage';
 import Loading from '../Components/Loading';
 import RepositoryTitle from '../Components/RepositoryTitle';
 import Notification from '../Components/Notification';
@@ -144,12 +145,14 @@ class NotificationsView extends Component {
   }
 
   render() {
+    if (this.props.errored) {
+      return <ErrorPage onReload={() => this.props.fetchNotifications()} />;
+    }
+
     if (!this.state.dataSource.getRowCount() && this.props.query) {
       return (
         <View style={styles.container}>
-          <Toolbar
-            count={this.props.notifications.length}
-            query={this.props.query} />
+          <Toolbar count={this.props.notifications.length} query={this.props.query} />
           <View style={styles.noResultsWrapper}>
             <Text style={styles.noResultsTitle}>No Search Results.</Text>
             <Text style={styles.noResultsDesc}>No Organisations or Repositories{'\n'}match your search term.</Text>
@@ -160,16 +163,12 @@ class NotificationsView extends Component {
 
     if (!this.props.notifications.length && !this.props.query
       && !this.props.isFetching && !this.props.isReFetching) {
-      return (
-        <AllRead
-          isReFetching={this.props.isReFetching}
-          onPull={(isReFetching) => this.props.fetchNotifications(isReFetching)} />
-      );
+      return <AllRead onReload={() => this.props.fetchNotifications()} />;
     }
 
     return (
       <View style={styles.container}>
-        {this.props.isReFetching && !this.props.notifications.length ? null : <Toolbar count={this.props.notifications.length} query={this.props.query} />}
+        <Toolbar count={this.props.notifications.length} query={this.props.query} />
         <ListView
           style={styles.listContainer}
           dataSource={this.state.dataSource}
@@ -191,6 +190,7 @@ function mapStateToProps(state) {
     isFetching: state.notifications.get('isFetching'),
     isReFetching: state.notifications.get('isReFetching'),
     notifications: state.notifications.get('response', []),
+    errored: state.notifications.get('errored'),
     query: state.search.get('query')
   };
 };

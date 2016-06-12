@@ -38,6 +38,16 @@ export default class GithubView extends Component {
     url: PropTypes.string.isRequired
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      backButtonEnabled: false,
+      forwardButtonEnabled: false,
+      url: props.url
+    };
+  }
+
   goBack() {
     this.refs.browser.goBack();
   }
@@ -50,19 +60,34 @@ export default class GithubView extends Component {
     this.refs.browser.reload();
   }
 
+  onNavigationStateChange(navState) {
+    this.setState({
+      backButtonEnabled: navState.canGoBack,
+      forwardButtonEnabled: navState.canGoForward,
+      url: navState.url
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <WebView
           ref="browser"
-          source={{uri: this.props.url}}
+          source={{uri: this.state.url}}
+          onNavigationStateChange={this.onNavigationStateChange.bind(this)}
           automaticallyAdjustContentInsets={true}
           startInLoadingState={true} />
 
         <View style={styles.toolbar}>
           <View style={styles.toolbarLeft}>
-            <ButtonBrowser icon="chevron-left" onPress={() => this.goBack()} />
-            <ButtonBrowser icon="chevron-right" onPress={() => this.goForward()} />
+            <ButtonBrowser
+              icon="chevron-left"
+              onPress={() => this.goBack()}
+              disabled={!this.state.backButtonEnabled} />
+            <ButtonBrowser
+              icon="chevron-right"
+              onPress={() => this.goForward()}
+              disabled={!this.state.forwardButtonEnabled} />
           </View>
 
           <View style={styles.toolbarRight}>
