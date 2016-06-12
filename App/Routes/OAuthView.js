@@ -24,6 +24,14 @@ class OAuthView extends Component {
     authUrl: PropTypes.string.isRequired
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      url: props.authUrl
+    };
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.get('token')) {
       this.props.navigator.resetTo(Routes.Notifications());
@@ -41,10 +49,10 @@ class OAuthView extends Component {
   }
 
   onNavigationStateChange(args) {
-    var url = args.url;
-    var raw_code = /code=([^&]*)/.exec(url) || null;
-    var code = (raw_code && raw_code.length > 1) ? raw_code[1] : null;
-    var error = /\?error=(.+)$/.exec(url);
+    const url = args.url;
+    const raw_code = /code=([^&]*)/.exec(url) || null;
+    const code = (raw_code && raw_code.length > 1) ? raw_code[1] : null;
+    const error = /\?error=(.+)$/.exec(url);
 
     // If there is a code, proceed to get token from github
     if (code) {
@@ -58,15 +66,18 @@ class OAuthView extends Component {
   }
 
   render() {
+    if (this.props.auth.get('isFetching') || this.props.auth.get('token')) {
+      return <Loading isLoading={true} text="Authentication" />;
+    }
+
     return (
       <View style={styles.container}>
         <WebView
           style={styles.container}
-          source={{uri: this.props.authUrl}}
+          source={{uri: this.state.url}}
           onNavigationStateChange={this.onNavigationStateChange.bind(this)}
           automaticallyAdjustContentInsets={true}
           startInLoadingState={true} />
-        <Loading isLoading={this.props.auth.get('isFetching')} text="Authentication" />
       </View>
     );
   }
