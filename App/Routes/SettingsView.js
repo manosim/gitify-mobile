@@ -57,6 +57,11 @@ class SettingsView extends Component {
             value={this.props.settings.get('playSound')}
             onChange={(value) => this.props.updateSetting('playSound', value)} />
 
+          <Setting
+            title="Open in Browser"
+            value={this.props.settings.get('inBrowser')}
+            onChange={(value) => this.props.updateSetting('inBrowser', value)} />
+
           <Button style={{marginVertical: 20}} onPress={() => this.logout()} text="Logout" />
         </View>
 
