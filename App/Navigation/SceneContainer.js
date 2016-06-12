@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {
+  Platform,
   StatusBar,
   StyleSheet,
   View
@@ -25,6 +26,8 @@ export default class SceneContainer extends React.Component {
   }
 
   paintStatusBar() {
+    if (Platform.OS !== 'ios') { return; }
+
     if (this.props.route.displayNavBar) {
       StatusBar.setBarStyle('light-content', true);
     } else {

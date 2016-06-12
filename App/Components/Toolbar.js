@@ -6,6 +6,7 @@ import { searchNotifications } from '../Actions';
 import Constants from '../Utils/Constants';
 
 import {
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -24,25 +25,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 15,
-
+    paddingVertical: 12,
   },
   countIcon: {
+    marginRight: 7.5,
     color: '#FFF',
     fontSize: 18,
-    marginRight: 7.5
   },
   countText: {
     color: '#FFF',
     fontSize: 18,
     fontWeight: '500',
-    paddingVertical: 10
   },
   textInput: {
     flex: 1,
     marginLeft: 5,
     paddingHorizontal: 15,
     color: '#FFF',
-    textAlign: 'right'
+    textAlign: 'right',
+
+    ...Platform.select({
+      android: {
+        height: 40
+      },
+    })
   }
 });
 

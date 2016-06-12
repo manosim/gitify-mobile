@@ -15,30 +15,28 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-
-  },
-  titleBar: {
     flex: 1,
     flexDirection: 'row',
+    paddingVertical: 10,
+    paddingHorizontal: 10,
     backgroundColor: Constants.REPO_TITLE_BG,
     alignItems: 'center'
   },
   avatar: {
     width: 25,
     height: 25,
-    marginLeft: 15,
+    marginLeft: 5,
     borderRadius: 12.5
   },
   title: {
     flex: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    marginHorizontal: 10,
     fontSize: 16,
     fontWeight: 'bold'
   },
   checkIcon: {
     fontSize: 20,
-    marginRight: 15,
+    marginRight: 10,
     color: Constants.THEME_ALT
   }
 });
@@ -62,15 +60,13 @@ class RepositoryTitle extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.titleBar}>
-          <Image style={styles.avatar} source={{uri: avatar_url}} />
-          <Text style={styles.title} numberOfLines={1}>{details.full_name}</Text>
-          <TouchableHighlight
-            onPress={() => this.markAsRead()}
-            underlayColor={Constants.REPO_TITLE_BG}>
-            <Icon name="check" style={styles.checkIcon} />
-          </TouchableHighlight>
-        </View>
+        <Image style={styles.avatar} source={{uri: avatar_url}} />
+        <Text style={styles.title} numberOfLines={1}>{details.full_name}</Text>
+        <TouchableHighlight
+          onPress={() => this.markAsRead()}
+          underlayColor={Constants.REPO_TITLE_BG}>
+          <Icon name="check" style={styles.checkIcon} />
+        </TouchableHighlight>
       </View>
     );
   };
