@@ -1,6 +1,3 @@
-import {CALL_API, getJSON} from 'redux-api-middleware';
-
-
 // Settings
 
 export const APP_LOADED = 'APP_LOADED';
@@ -27,23 +24,23 @@ export const FETCH_TOKEN_SUCCESS = 'FETCH_TOKEN_SUCCESS';
 export const FETCH_TOKEN_FAILURE = 'FETCH_TOKEN_FAILURE';
 export function fetchToken(data) {
   return {
-    [CALL_API]: {
-      endpoint: 'https://github.com/login/oauth/access_token',
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache'
-      },
-      body: JSON.stringify(data),
-      types: [FETCH_TOKEN_REQUEST, {
-        type: FETCH_TOKEN_SUCCESS,
-        payload: (action, state, res) => getJSON(res)
-      }, {
-        type: FETCH_TOKEN_FAILURE,
-        payload: (action, state, res) => getJSON(res)
-      }]
-    }
+  //   [CALL_API]: {
+  //     endpoint: 'https://github.com/login/oauth/access_token',
+  //     method: 'POST',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //       'Cache-Control': 'no-cache'
+  //     },
+  //     body: JSON.stringify(data),
+  //     types: [FETCH_TOKEN_REQUEST, {
+  //       type: FETCH_TOKEN_SUCCESS,
+  //       payload: (action, state, res) => getJSON(res)
+  //     }, {
+  //       type: FETCH_TOKEN_FAILURE,
+  //       payload: (action, state, res) => getJSON(res)
+  //     }]
+  //   }
   };
 };
 
@@ -60,33 +57,81 @@ export function logout() {
 export const FETCH_NOTIFICATIONS_REQUEST = 'FETCH_NOTIFICATIONS_REQUEST';
 export const FETCH_NOTIFICATIONS_SUCCESS = 'FETCH_NOTIFICATIONS_SUCCESS';
 export const FETCH_NOTIFICATIONS_FAILURE = 'FETCH_NOTIFICATIONS_FAILURE';
-export function fetchNotifications(isReFetching = false) {
+
+export function fetchNotificationsRequest(isReFetching) {
   return {
-    [CALL_API]: {
-      endpoint: 'https://api.github.com/notifications',
+    type: FETCH_NOTIFICATIONS_REQUEST,
+  };
+};
+
+export function fetchNotificationsSuccess(isReFetching, payload) {
+  return {
+    type: FETCH_NOTIFICATIONS_SUCCESS,
+    meta: {
+      isReFetching
+    },
+    payload
+  };
+};
+
+export function fetchNotificationsFailure(isReFetching) {
+  return {
+    type: FETCH_NOTIFICATIONS_FAILURE,
+    meta: {
+      isReFetching
+    },
+  };
+};
+
+export function fetchNotifications(isReFetching = false) {
+  return (dispatch, getState) => {
+    dispatch(fetchNotificationsRequest());
+
+    const token = 'token ' + getState().auth.get('token');
+
+    return fetch('https://api.github.com/notifications', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
+        'Authorization': token,
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache'
       },
-      types: [
-        {
-          type: FETCH_NOTIFICATIONS_REQUEST,
-          meta: { isReFetching }
-        },
-        {
-          type: FETCH_NOTIFICATIONS_SUCCESS,
-          meta: { isReFetching },
-          payload: (action, state, res) => getJSON(res)
-        },
-        {
-          type: FETCH_NOTIFICATIONS_FAILURE,
-          meta: { isReFetching }
-        }
-      ]
-    }
+    })
+    .then(json => {
+      dispatch(fetchNotificationsSuccess(isReFetching, json));
+    })
+    .catch(error => {
+      dispatch(fetchNotificationsFailure(isReFetching));
+    });
   };
+
+  // return {
+    // [CALL_API]: {
+    //   endpoint: 'https://api.github.com/notifications',
+    //   method: 'GET',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'Cache-Control': 'no-cache'
+    //   },
+    //   types: [
+    //     {
+    //       type: FETCH_NOTIFICATIONS_REQUEST,
+    //       meta: { isReFetching }
+    //     },
+    //     {
+    //       type: FETCH_NOTIFICATIONS_SUCCESS,
+    //       meta: { isReFetching },
+    //       payload: (action, state, res) => getJSON(res)
+    //     },
+    //     {
+    //       type: FETCH_NOTIFICATIONS_FAILURE,
+    //       meta: { isReFetching }
+    //     }
+    //   ]
+    // }
+  // };
 };
 
 
@@ -97,27 +142,27 @@ export const MARK_NOTIFICATION_SUCCESS = 'MARK_NOTIFICATION_SUCCESS';
 export const MARK_NOTIFICATION_FAILURE = 'MARK_NOTIFICATION_FAILURE';
 export function markNotification(id) {
   return {
-    [CALL_API]: {
-      endpoint: `https://api.github.com/notifications/threads/${id}`,
-      method: 'PATCH',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache'
-      },
-      types: [
-        {
-          type: MARK_NOTIFICATION_REQUEST
-        },
-        {
-          type: MARK_NOTIFICATION_SUCCESS,
-          meta: { id }
-        },
-        {
-          type: MARK_NOTIFICATION_FAILURE
-        }
-      ]
-    }
+    // [CALL_API]: {
+    //   endpoint: `https://api.github.com/notifications/threads/${id}`,
+    //   method: 'PATCH',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'Cache-Control': 'no-cache'
+    //   },
+    //   types: [
+    //     {
+    //       type: MARK_NOTIFICATION_REQUEST
+    //     },
+    //     {
+    //       type: MARK_NOTIFICATION_SUCCESS,
+    //       meta: { id }
+    //     },
+    //     {
+    //       type: MARK_NOTIFICATION_FAILURE
+    //     }
+    //   ]
+    // }
   };
 };
 
@@ -129,27 +174,27 @@ export const MARK_REPO_NOTIFICATION_SUCCESS = 'MARK_REPO_NOTIFICATION_SUCCESS';
 export const MARK_REPO_NOTIFICATION_FAILURE = 'MARK_REPO_NOTIFICATION_FAILURE';
 export function markRepoNotifications(loginId, repoId, repoFullName) {
   return {
-    [CALL_API]: {
-      endpoint: `https://api.github.com/repos/${loginId}/${repoId}/notifications`,
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({}),
-      types: [
-        {
-          type: MARK_REPO_NOTIFICATION_REQUEST
-        },
-        {
-          type: MARK_REPO_NOTIFICATION_SUCCESS,
-          meta: { repoFullName }
-        },
-        {
-          type: MARK_REPO_NOTIFICATION_FAILURE
-        }
-      ]
-    }
+    // [CALL_API]: {
+    //   endpoint: `https://api.github.com/repos/${loginId}/${repoId}/notifications`,
+    //   method: 'PUT',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({}),
+    //   types: [
+    //     {
+    //       type: MARK_REPO_NOTIFICATION_REQUEST
+    //     },
+    //     {
+    //       type: MARK_REPO_NOTIFICATION_SUCCESS,
+    //       meta: { repoFullName }
+    //     },
+    //     {
+    //       type: MARK_REPO_NOTIFICATION_FAILURE
+    //     }
+    //   ]
+    // }
   };
 };
 
