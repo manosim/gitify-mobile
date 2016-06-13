@@ -61,31 +61,29 @@ export const FETCH_NOTIFICATIONS_FAILURE = 'FETCH_NOTIFICATIONS_FAILURE';
 export function fetchNotificationsRequest(isReFetching) {
   return {
     type: FETCH_NOTIFICATIONS_REQUEST,
+    meta: {
+      isReFetching
+    }
   };
 };
 
-export function fetchNotificationsSuccess(isReFetching, payload) {
+export function fetchNotificationsSuccess(payload) {
   return {
     type: FETCH_NOTIFICATIONS_SUCCESS,
-    meta: {
-      isReFetching
-    },
     payload
   };
 };
 
-export function fetchNotificationsFailure(isReFetching) {
+export function fetchNotificationsFailure(error) {
   return {
     type: FETCH_NOTIFICATIONS_FAILURE,
-    meta: {
-      isReFetching
-    },
+    payload: error
   };
 };
 
 export function fetchNotifications(isReFetching = false) {
   return (dispatch, getState) => {
-    dispatch(fetchNotificationsRequest());
+    dispatch(fetchNotificationsRequest(isReFetching));
 
     const token = 'token ' + getState().auth.get('token');
 
@@ -98,11 +96,13 @@ export function fetchNotifications(isReFetching = false) {
         'Cache-Control': 'no-cache'
       },
     })
+    .then(response => response.json())
     .then(json => {
-      dispatch(fetchNotificationsSuccess(isReFetching, json));
+      dispatch(fetchNotificationsSuccess(json));
     })
     .catch(error => {
-      dispatch(fetchNotificationsFailure(isReFetching));
+      console.log(error);
+      dispatch(fetchNotificationsFailure(error));
     });
   };
 
