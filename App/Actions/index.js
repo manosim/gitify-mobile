@@ -180,7 +180,6 @@ export function markNotification(id) {
       return response.json();
     })
     .then(json => {
-      console.log(json.id);
       dispatch(markNotificationSuccess(json.id));
     })
     .catch(error => {
