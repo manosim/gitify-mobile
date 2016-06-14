@@ -22,25 +22,51 @@ export function updateSetting(setting, value) {
 export const FETCH_TOKEN_REQUEST = 'FETCH_TOKEN_REQUEST';
 export const FETCH_TOKEN_SUCCESS = 'FETCH_TOKEN_SUCCESS';
 export const FETCH_TOKEN_FAILURE = 'FETCH_TOKEN_FAILURE';
-export function fetchToken(data) {
+
+export function fetchTokenRequest() {
   return {
-  //   [CALL_API]: {
-  //     endpoint: 'https://github.com/login/oauth/access_token',
-  //     method: 'POST',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //       'Cache-Control': 'no-cache'
-  //     },
-  //     body: JSON.stringify(data),
-  //     types: [FETCH_TOKEN_REQUEST, {
-  //       type: FETCH_TOKEN_SUCCESS,
-  //       payload: (action, state, res) => getJSON(res)
-  //     }, {
-  //       type: FETCH_TOKEN_FAILURE,
-  //       payload: (action, state, res) => getJSON(res)
-  //     }]
-  //   }
+    type: FETCH_TOKEN_REQUEST
+  };
+};
+
+export function fetchTokenSuccess(payload) {
+  return {
+    type: FETCH_TOKEN_SUCCESS,
+    payload
+  };
+};
+
+export function fetchTokenFailure() {
+  return {
+    type: FETCH_TOKEN_FAILURE
+  };
+};
+
+export function fetchToken(data) {
+  return (dispatch, getState) => {
+    dispatch(fetchTokenRequest());
+
+    return fetch('https://github.com/login/oauth/access_token', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then(json => {
+      dispatch(fetchTokenSuccess(json));
+    })
+    .catch(error => {
+      dispatch(fetchTokenFailure());
+    });
   };
 };
 
@@ -74,19 +100,16 @@ export function fetchNotificationsSuccess(payload) {
   };
 };
 
-export function fetchNotificationsFailure(error) {
+export function fetchNotificationsFailure() {
   return {
-    type: FETCH_NOTIFICATIONS_FAILURE,
-    payload: error
+    type: FETCH_NOTIFICATIONS_FAILURE
   };
 };
 
 export function fetchNotifications(isReFetching = false) {
   return (dispatch, getState) => {
     dispatch(fetchNotificationsRequest(isReFetching));
-
     const token = 'token ' + getState().auth.get('token');
-
     return fetch('https://api.github.com/notifications', {
       method: 'GET',
       headers: {
@@ -96,42 +119,19 @@ export function fetchNotifications(isReFetching = false) {
         'Cache-Control': 'no-cache'
       },
     })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response.json();
+    })
     .then(json => {
       dispatch(fetchNotificationsSuccess(json));
     })
     .catch(error => {
-      console.log(error);
-      dispatch(fetchNotificationsFailure(error));
+      dispatch(fetchNotificationsFailure());
     });
   };
-
-  // return {
-    // [CALL_API]: {
-    //   endpoint: 'https://api.github.com/notifications',
-    //   method: 'GET',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json',
-    //     'Cache-Control': 'no-cache'
-    //   },
-    //   types: [
-    //     {
-    //       type: FETCH_NOTIFICATIONS_REQUEST,
-    //       meta: { isReFetching }
-    //     },
-    //     {
-    //       type: FETCH_NOTIFICATIONS_SUCCESS,
-    //       meta: { isReFetching },
-    //       payload: (action, state, res) => getJSON(res)
-    //     },
-    //     {
-    //       type: FETCH_NOTIFICATIONS_FAILURE,
-    //       meta: { isReFetching }
-    //     }
-    //   ]
-    // }
-  // };
 };
 
 

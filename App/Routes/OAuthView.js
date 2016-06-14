@@ -70,6 +70,11 @@ class OAuthView extends Component {
       return <Loading isLoading={true} text="Authentication" />;
     }
 
+    if (this.props.auth.get('errored')) {
+      // FIXME! SHOW ERROR!
+      return <Loading isLoading={true} text="Authentication" />;
+    }
+
     return (
       <View style={styles.container}>
         <WebView
