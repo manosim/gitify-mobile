@@ -10,6 +10,7 @@ import {
 
 import { fetchToken } from '../Actions';
 import Constants from '../Utils/Constants';
+import ErrorPage from '../Components/ErrorPage';
 import Loading from '../Components/Loading';
 import Routes from '../Navigation/Routes';
 
@@ -36,6 +37,12 @@ class OAuthView extends Component {
     if (nextProps.auth.get('token')) {
       this.props.navigator.resetTo(Routes.Notifications());
     }
+  }
+
+  reload() {
+    this.setState({
+      url: this.props.authUrl
+    });
   }
 
   requestGithubToken(code) {
@@ -71,8 +78,9 @@ class OAuthView extends Component {
     }
 
     if (this.props.auth.get('errored')) {
-      // FIXME! SHOW ERROR!
-      return <Loading isLoading={true} text="Authentication" />;
+      return <ErrorPage
+        subheading="Couldn't authenticate with GitHub."
+        onReload={() => this.reload()} />;
     }
 
     return (

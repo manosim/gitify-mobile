@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
 
 export default class ErrorPage extends Component {
   static propTypes = {
-    onReload: PropTypes.func.isRequired
+    onReload: PropTypes.func.isRequired,
+    subheading: PropTypes.string.isRequired
   };
 
   constructor(props) {
@@ -79,7 +80,7 @@ export default class ErrorPage extends Component {
         contentContainerStyle={styles.container}>
         <View style={styles.wrapper}>
           <Text style={styles.heading}>Oops something went wrong.</Text>
-          <Text style={styles.subheading}>Couldn't get your notifications.</Text>
+          <Text style={styles.subheading}>{this.props.subheading}</Text>
           <Text style={styles.emoji}>{emoji}</Text>
           <TouchableHighlight
             style={styles.button}
