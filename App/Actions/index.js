@@ -110,7 +110,9 @@ export function fetchNotifications(isReFetching = false) {
   return (dispatch, getState) => {
     dispatch(fetchNotificationsRequest(isReFetching));
     const token = 'token ' + getState().auth.get('token');
-    return fetch('https://api.github.com/notifications', {
+    const isParticipating = getState().settings.get('participating') ? 'true' : 'false';
+
+    return fetch(`https://api.github.com/notifications?participating=${isParticipating}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
