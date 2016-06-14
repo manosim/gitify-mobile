@@ -34,11 +34,11 @@ export default function reducer(state = initialState, action) {
         .set('isFetching', false)
         .set('isReFetching', false);
     case actions.MARK_NOTIFICATION_SUCCESS:
-      const id = action.meta.id;
+      const id = action.id;
       return state
         .set('response', _.without(state.get('response'), _.findWhere(state.get('response'), {id})));
     case actions.MARK_REPO_NOTIFICATION_SUCCESS:
-      const repoFullName = action.meta.repoFullName;
+      const repoFullName = action.repoFullName;
       return state
         .set('response', _.reject(state.get('response'), (obj) => obj.repository.full_name === repoFullName));
     default:

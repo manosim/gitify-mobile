@@ -146,7 +146,9 @@ class NotificationsView extends Component {
 
   render() {
     if (this.props.errored) {
-      return <ErrorPage onReload={() => this.props.fetchNotifications()} />;
+      return <ErrorPage
+        subheading="Couldn't get your notifications."
+        onReload={() => this.props.fetchNotifications()} />;
     }
 
     if (!this.state.dataSource.getRowCount() && this.props.query) {

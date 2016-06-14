@@ -1,6 +1,3 @@
-import {CALL_API, getJSON} from 'redux-api-middleware';
-
-
 // Settings
 
 export const APP_LOADED = 'APP_LOADED';
@@ -25,25 +22,51 @@ export function updateSetting(setting, value) {
 export const FETCH_TOKEN_REQUEST = 'FETCH_TOKEN_REQUEST';
 export const FETCH_TOKEN_SUCCESS = 'FETCH_TOKEN_SUCCESS';
 export const FETCH_TOKEN_FAILURE = 'FETCH_TOKEN_FAILURE';
-export function fetchToken(data) {
+
+export function fetchTokenRequest() {
   return {
-    [CALL_API]: {
-      endpoint: 'https://github.com/login/oauth/access_token',
+    type: FETCH_TOKEN_REQUEST
+  };
+};
+
+export function fetchTokenSuccess(payload) {
+  return {
+    type: FETCH_TOKEN_SUCCESS,
+    payload
+  };
+};
+
+export function fetchTokenFailure() {
+  return {
+    type: FETCH_TOKEN_FAILURE
+  };
+};
+
+export function fetchToken(data) {
+  return (dispatch, getState) => {
+    dispatch(fetchTokenRequest());
+
+    return fetch('https://github.com/login/oauth/access_token', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache'
       },
-      body: JSON.stringify(data),
-      types: [FETCH_TOKEN_REQUEST, {
-        type: FETCH_TOKEN_SUCCESS,
-        payload: (action, state, res) => getJSON(res)
-      }, {
-        type: FETCH_TOKEN_FAILURE,
-        payload: (action, state, res) => getJSON(res)
-      }]
-    }
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then(json => {
+      dispatch(fetchTokenSuccess(json));
+    })
+    .catch(error => {
+      dispatch(fetchTokenFailure());
+    });
   };
 };
 
@@ -60,32 +83,54 @@ export function logout() {
 export const FETCH_NOTIFICATIONS_REQUEST = 'FETCH_NOTIFICATIONS_REQUEST';
 export const FETCH_NOTIFICATIONS_SUCCESS = 'FETCH_NOTIFICATIONS_SUCCESS';
 export const FETCH_NOTIFICATIONS_FAILURE = 'FETCH_NOTIFICATIONS_FAILURE';
-export function fetchNotifications(isReFetching = false) {
+
+export function fetchNotificationsRequest(isReFetching) {
   return {
-    [CALL_API]: {
-      endpoint: 'https://api.github.com/notifications',
+    type: FETCH_NOTIFICATIONS_REQUEST,
+    meta: {
+      isReFetching
+    }
+  };
+};
+
+export function fetchNotificationsSuccess(payload) {
+  return {
+    type: FETCH_NOTIFICATIONS_SUCCESS,
+    payload
+  };
+};
+
+export function fetchNotificationsFailure() {
+  return {
+    type: FETCH_NOTIFICATIONS_FAILURE
+  };
+};
+
+export function fetchNotifications(isReFetching = false) {
+  return (dispatch, getState) => {
+    dispatch(fetchNotificationsRequest(isReFetching));
+    const token = 'token ' + getState().auth.get('token');
+    return fetch('https://api.github.com/notifications', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
+        'Authorization': token,
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache'
       },
-      types: [
-        {
-          type: FETCH_NOTIFICATIONS_REQUEST,
-          meta: { isReFetching }
-        },
-        {
-          type: FETCH_NOTIFICATIONS_SUCCESS,
-          meta: { isReFetching },
-          payload: (action, state, res) => getJSON(res)
-        },
-        {
-          type: FETCH_NOTIFICATIONS_FAILURE,
-          meta: { isReFetching }
-        }
-      ]
-    }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then(json => {
+      dispatch(fetchNotificationsSuccess(json));
+    })
+    .catch(error => {
+      dispatch(fetchNotificationsFailure());
+    });
   };
 };
 
@@ -95,29 +140,51 @@ export function fetchNotifications(isReFetching = false) {
 export const MARK_NOTIFICATION_REQUEST = 'MARK_NOTIFICATION_REQUEST';
 export const MARK_NOTIFICATION_SUCCESS = 'MARK_NOTIFICATION_SUCCESS';
 export const MARK_NOTIFICATION_FAILURE = 'MARK_NOTIFICATION_FAILURE';
-export function markNotification(id) {
+
+export function markNotificationRequest() {
   return {
-    [CALL_API]: {
-      endpoint: `https://api.github.com/notifications/threads/${id}`,
-      method: 'PATCH',
+    type: MARK_NOTIFICATION_REQUEST
+  };
+};
+
+export function markNotificationSuccess(id) {
+  return {
+    type: MARK_NOTIFICATION_SUCCESS,
+    id
+  };
+};
+
+export function markNotificationFailure() {
+  return {
+    type: MARK_NOTIFICATION_FAILURE
+  };
+};
+
+export function markNotification(id) {
+  return (dispatch, getState) => {
+    dispatch(markNotificationRequest());
+    const token = 'token ' + getState().auth.get('token');
+    return fetch(`https://api.github.com/notifications/threads/${id}`, {
+      method: 'GET',
       headers: {
         'Accept': 'application/json',
+        'Authorization': token,
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache'
       },
-      types: [
-        {
-          type: MARK_NOTIFICATION_REQUEST
-        },
-        {
-          type: MARK_NOTIFICATION_SUCCESS,
-          meta: { id }
-        },
-        {
-          type: MARK_NOTIFICATION_FAILURE
-        }
-      ]
-    }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then(json => {
+      dispatch(markNotificationSuccess(json.id));
+    })
+    .catch(error => {
+      dispatch(markNotificationFailure());
+    });
   };
 };
 
@@ -127,29 +194,49 @@ export function markNotification(id) {
 export const MARK_REPO_NOTIFICATION_REQUEST = 'MARK_REPO_NOTIFICATION_REQUEST';
 export const MARK_REPO_NOTIFICATION_SUCCESS = 'MARK_REPO_NOTIFICATION_SUCCESS';
 export const MARK_REPO_NOTIFICATION_FAILURE = 'MARK_REPO_NOTIFICATION_FAILURE';
-export function markRepoNotifications(loginId, repoId, repoFullName) {
+
+
+export function markRepoNotificationsRequest() {
   return {
-    [CALL_API]: {
-      endpoint: `https://api.github.com/repos/${loginId}/${repoId}/notifications`,
+    type: MARK_REPO_NOTIFICATION_REQUEST
+  };
+};
+
+export function markRepoNotificationsSuccess(repoFullName) {
+  return {
+    type: MARK_REPO_NOTIFICATION_SUCCESS,
+    repoFullName
+  };
+};
+
+export function markRepoNotificationsFailure() {
+  return {
+    type: MARK_REPO_NOTIFICATION_FAILURE
+  };
+};
+
+export function markRepoNotifications(loginId, repoId, repoFullName) {
+  return (dispatch, getState) => {
+    dispatch(markRepoNotificationsRequest());
+    const token = 'token ' + getState().auth.get('token');
+    return fetch(`https://api.github.com/repos/${loginId}/${repoId}/notifications`, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
+        'Authorization': token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({}),
-      types: [
-        {
-          type: MARK_REPO_NOTIFICATION_REQUEST
-        },
-        {
-          type: MARK_REPO_NOTIFICATION_SUCCESS,
-          meta: { repoFullName }
-        },
-        {
-          type: MARK_REPO_NOTIFICATION_FAILURE
-        }
-      ]
-    }
+      body: JSON.stringify({})
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      dispatch(markRepoNotificationsSuccess(repoFullName));
+    })
+    .catch(error => {
+      dispatch(markRepoNotificationsFailure());
+    });
   };
 };
 
