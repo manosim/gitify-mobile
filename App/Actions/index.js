@@ -225,15 +225,13 @@ export function markRepoNotifications(loginId, repoId, repoFullName) {
         'Accept': 'application/json',
         'Authorization': token,
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify({})
     })
     .then(response => {
       if (!response.ok) {
         throw Error(response.statusText);
       }
-      return response.json();
-    })
-    .then(json => {
       dispatch(markRepoNotificationsSuccess(repoFullName));
     })
     .catch(error => {
