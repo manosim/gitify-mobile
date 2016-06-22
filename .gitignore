@@ -44,3 +44,5 @@ android/app/libs
 #
 android/app/app.iml
 android/Gitify.iml
+
+android/app/gitify.keystore
