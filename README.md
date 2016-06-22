@@ -2,6 +2,7 @@
 
 > If you are looking for the desktop version - [ekonstantinidis/gitify](https://github.com/ekonstantinidis/gitify/).
 
+![Gitify](images/press.png)
 
 ### Download
 Available for **free** on iOS & Android.
