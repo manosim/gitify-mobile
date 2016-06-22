@@ -1,5 +1,11 @@
 # Gitify Mobile  [![travis][travis-image]][travis-url]
 
+### Download
+Available on iOS & Android
+
+ - [App Store] (https://itunes.apple.com/us/app/gitify/id1123311036?ls=1&mt=8)
+ - [Google Play Store] (http://play.google.com/store/apps/details?id=com.gitify)
+
 ### Prerequisites
 
  - [React](https://facebook.github.io/react/)
