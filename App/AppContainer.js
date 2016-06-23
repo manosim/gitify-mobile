@@ -2,6 +2,7 @@ import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
 import { connect } from 'react-redux';
 
 import {
+  BackAndroid,
   Navigator,
   StyleSheet
 } from 'react-native';
@@ -22,7 +23,26 @@ const styles = StyleSheet.create({
 });
 
 class AppContainer extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.navigator;
+  }
+
+  componentWillMount() {
+    BackAndroid.addEventListener('hardwareBackPress', () => {
+      if (this.navigator && this.navigator.getCurrentRoutes().length > 1) {
+        this.navigator.pop();
+        return true;
+      }
+      return false;
+    });
+  }
+
   renderScene(route, navigator) {
+    this.navigator = navigator;
+
     return (
       <SceneContainer
         title={route.title}
@@ -53,7 +73,7 @@ class AppContainer extends Component {
     return (
       <Navigator
         initialRoute={initialRoute}
-        renderScene={this.renderScene}
+        renderScene={this.renderScene.bind(this)}
         navigationBar={<NavigationBar style={styles.navbar} routeMapper={RouteMapper} />} />
     );
   }
