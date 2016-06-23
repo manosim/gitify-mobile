@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import {
   Linking,
+  Platform,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -44,6 +45,8 @@ class SettingsView extends Component {
   }
 
   render() {
+    const availableOn = (Platform.OS === 'ios') ? 'OSX, iOS' : 'OSX, iOS and Android';
+
     return (
       <View style={styles.container}>
         <View style={styles.settingsWrapper}>
@@ -72,7 +75,7 @@ class SettingsView extends Component {
           <Text style={styles.footerText}>www.gitify.io</Text>
         </TouchableHighlight>
 
-        <Text style={styles.footerText}>Available on OSX, iOS and Android.</Text>
+        <Text style={styles.footerText}>Available on {availableOn}.</Text>
         <Text style={styles.footerText}>Made with ❤ in Brighton.</Text>
         <Text style={styles.footerText}>Copyright (c) 2016 Emmanouil Konstantinidis</Text>
       </View>
