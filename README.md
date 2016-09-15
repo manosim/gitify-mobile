@@ -1,6 +1,6 @@
 # Gitify Mobile  [![travis][travis-image]][travis-url]
 
-> If you are looking for the desktop version - [ekonstantinidis/gitify](https://github.com/ekonstantinidis/gitify/).
+> If you are looking for the desktop version - [manosim/gitify](https://github.com/manosim/gitify/).
 
 ![Gitify](images/press.png)
 
@@ -61,5 +61,5 @@ To run the tests (`eslint`):
 
     npm test
 
-[travis-image]: https://travis-ci.org/ekonstantinidis/gitify-mobile.svg?branch=master
-[travis-url]: https://travis-ci.org/ekonstantinidis/gitify-mobile
+[travis-image]: https://travis-ci.org/manosim/gitify-mobile.svg?branch=master
+[travis-url]: https://travis-ci.org/manosim/gitify-mobile
