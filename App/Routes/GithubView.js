@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import ButtonBrowser from '../Components/ButtonBrowser';
 import Constants from '../Utils/Constants';
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class GithubView extends Component {
+export default class GithubView extends React.Component {
   static propTypes = {
     url: PropTypes.string.isRequired
   };

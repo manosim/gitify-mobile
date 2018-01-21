@@ -1,4 +1,5 @@
-import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Octicons';
 
 import Constants from '../Utils/Constants';
@@ -24,9 +25,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class NavigationButton extends Component {
+export default class NavigationButton extends React.Component {
   static contextTypes = {
-    drawer: React.PropTypes.object
+    drawer: PropTypes.object
   }
 
   _goBack() {

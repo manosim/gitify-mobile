@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { connect } from 'react-redux';
 
 import {
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class SettingsView extends Component {
+class SettingsView extends React.Component {
   logout() {
     this.props.logout();
     this.props.navigator.replace(Routes.LoginView());

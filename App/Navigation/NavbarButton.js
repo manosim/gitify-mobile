@@ -1,4 +1,4 @@
-import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import Icon from 'react-native-vector-icons/Octicons';
 
 import Constants from '../Utils/Constants';
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class NavigationButton extends Component {
+export default class NavigationButton extends React.Component {
   _noDuplicatesPush(route) {
     let routes = this.props.navigator.getCurrentRoutes();
     if (routes[routes.length - 1].id !== route.id) {

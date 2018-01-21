@@ -1,8 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-
-import {
-  Navigator
-} from 'react-native';
+import { Navigator } from 'react-native-deprecated-custom-components';
 
 export default class NavigationBar extends Navigator.NavigationBar {
   render() {

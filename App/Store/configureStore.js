@@ -18,8 +18,8 @@ const middlewares = [
 ];
 
 if (process.env.NODE_ENV === 'development') {
-  const createLogger = require('redux-logger');
-  const loggerMiddleware = createLogger();
+  const { createLogger } = require('redux-logger'); // eslint-disable-line no-undef
+  const loggerMiddleware = createLogger({ collapsed: true });
   middlewares.push(loggerMiddleware);
 }
 

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import Constants from '../Utils/Constants';
 
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Setting extends Component {
+export default class Setting extends React.Component {
 
   static propTypes = {
     title: PropTypes.string.isRequired,
