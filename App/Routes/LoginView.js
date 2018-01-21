@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
   Image,
@@ -37,6 +38,10 @@ const styles = StyleSheet.create({
 });
 
 export default class LoginView extends React.Component {
+  static propTypes = {
+    navigator: PropTypes.object.isRequired,
+  };
+
   doOAuth() {
     const authUrl = [
       'https://github.com/login/oauth/authorize',
@@ -61,4 +66,4 @@ export default class LoginView extends React.Component {
       </View>
     );
   }
-};
+}

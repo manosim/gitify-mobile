@@ -1,12 +1,12 @@
 import _ from 'underscore';
-import { Map } from 'immutable';
+import { List, Map } from 'immutable';
 import * as actions from '../Actions';
 
 const initialState = Map({
   isFetching: false,
   isReFetching: false,
   errored: false,
-  response: []
+  response: List()
 });
 
 export default function reducer(state = initialState, action) {
@@ -20,7 +20,7 @@ export default function reducer(state = initialState, action) {
         return state
           .set('errored', false)
           .set('isFetching', true)
-          .set('response', []);
+          .set('response', List());
       }
     case actions.FETCH_NOTIFICATIONS_SUCCESS:
       return state
@@ -44,4 +44,4 @@ export default function reducer(state = initialState, action) {
     default:
       return state;
   }
-};
+}

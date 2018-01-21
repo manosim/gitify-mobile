@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
   StyleSheet,
@@ -6,7 +7,7 @@ import {
   View,
 } from 'react-native';
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -19,6 +20,10 @@ var styles = StyleSheet.create({
 });
 
 export default class NavigationTitle extends React.Component {
+  static propTypes = {
+    route: PropTypes.object.isRequired,
+  };
+
   render() {
     return (
       <View style={styles.container}>

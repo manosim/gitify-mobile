@@ -23,7 +23,10 @@ const styles = StyleSheet.create({
 
 class OAuthView extends React.Component {
   static propTypes = {
-    authUrl: PropTypes.string.isRequired
+    navigator: PropTypes.object.isRequired,
+    authUrl: PropTypes.string.isRequired,
+    auth: PropTypes.object.isRequired,
+    fetchToken: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -75,13 +78,14 @@ class OAuthView extends React.Component {
 
   render() {
     if (this.props.auth.get('isFetching') || this.props.auth.get('token')) {
-      return <Loading isLoading={true} text="Authentication" />;
+      return <Loading isLoading text="Authentication" />;
     }
 
     if (this.props.auth.get('errored')) {
       return <ErrorPage
         subheading="Couldn't authenticate with GitHub."
-        onReload={() => this.reload()} />;
+        onReload={() => this.reload()}
+             />;
     }
 
     return (
@@ -90,17 +94,18 @@ class OAuthView extends React.Component {
           style={styles.container}
           source={{uri: this.state.url}}
           onNavigationStateChange={this.onNavigationStateChange.bind(this)}
-          automaticallyAdjustContentInsets={true}
-          startInLoadingState={true} />
+          automaticallyAdjustContentInsets
+          startInLoadingState
+        />
       </View>
     );
   }
-};
+}
 
 function mapStateToProps(state) {
   return {
     auth: state.auth
   };
-};
+}
 
 export default connect(mapStateToProps, { fetchToken })(OAuthView);

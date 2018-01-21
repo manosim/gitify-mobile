@@ -50,15 +50,15 @@ export default class GithubView extends React.Component {
   }
 
   goBack() {
-    this.refs.browser.goBack();
+    this.webView.goBack();
   }
 
   goForward() {
-    this.refs.browser.goForward();
+    this.webView.goForward();
   }
 
   reload() {
-    this.refs.browser.reload();
+    this.webView.reload();
   }
 
   onNavigationStateChange(navState) {
@@ -73,22 +73,27 @@ export default class GithubView extends React.Component {
     return (
       <View style={styles.container}>
         <WebView
-          ref="browser"
+          ref={el => {
+            this.webView = el;
+          }}
           source={{uri: this.state.url}}
           onNavigationStateChange={this.onNavigationStateChange.bind(this)}
-          automaticallyAdjustContentInsets={true}
-          startInLoadingState={true} />
+          automaticallyAdjustContentInsets
+          startInLoadingState
+        />
 
         <View style={styles.toolbar}>
           <View style={styles.toolbarLeft}>
             <ButtonBrowser
               icon="chevron-left"
               onPress={() => this.goBack()}
-              disabled={!this.state.backButtonEnabled} />
+              disabled={!this.state.backButtonEnabled}
+            />
             <ButtonBrowser
               icon="chevron-right"
               onPress={() => this.goForward()}
-              disabled={!this.state.forwardButtonEnabled} />
+              disabled={!this.state.forwardButtonEnabled}
+            />
           </View>
 
           <View style={styles.toolbarRight}>
@@ -98,4 +103,4 @@ export default class GithubView extends React.Component {
       </View>
     );
   }
-};
+}

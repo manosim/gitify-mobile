@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
@@ -39,6 +40,13 @@ const styles = StyleSheet.create({
 });
 
 class SettingsView extends React.Component {
+  static propTypes = {
+    navigator: PropTypes.object.isRequired,
+    settings: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired,
+    updateSetting: PropTypes.func.isRequired,
+  };
+
   logout() {
     this.props.logout();
     this.props.navigator.replace(Routes.LoginView());
@@ -53,17 +61,20 @@ class SettingsView extends React.Component {
           <Setting
             title="Participating"
             value={this.props.settings.get('participating')}
-            onChange={(value) => this.props.updateSetting('participating', value)} />
+            onChange={(value) => this.props.updateSetting('participating', value)}
+          />
 
           <Setting
             title="Play Sound"
             value={this.props.settings.get('playSound')}
-            onChange={(value) => this.props.updateSetting('playSound', value)} />
+            onChange={(value) => this.props.updateSetting('playSound', value)}
+          />
 
           <Setting
             title="Open in Browser"
             value={this.props.settings.get('inBrowser')}
-            onChange={(value) => this.props.updateSetting('inBrowser', value)} />
+            onChange={(value) => this.props.updateSetting('inBrowser', value)}
+          />
 
           <Button style={{marginVertical: 20}} onPress={() => this.logout()} text="Logout" />
         </View>
@@ -71,7 +82,8 @@ class SettingsView extends React.Component {
         <TouchableHighlight
           onPress={() => Linking.openURL(Constants.WEBSITE_URL)}
           underlayColor={Constants.BG_COLOR}
-          style={styles.footerButton}>
+          style={styles.footerButton}
+        >
           <Text style={styles.footerText}>www.gitify.io</Text>
         </TouchableHighlight>
 
@@ -81,13 +93,13 @@ class SettingsView extends React.Component {
       </View>
     );
   }
-};
+}
 
 
 function mapStateToProps(state) {
   return {
     settings: state.settings
   };
-};
+}
 
 export default connect(mapStateToProps, { logout, updateSetting })(SettingsView);

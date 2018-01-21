@@ -1,11 +1,14 @@
-// Settings
+/* global fetch */
 
+import { fromJS } from 'immutable';
+
+// Settings
 export const APP_LOADED = 'APP_LOADED';
 export function appLoaded() {
   return {
     type: APP_LOADED
   };
-};
+}
 
 export const UPDATE_SETTING = 'UPDATE_SETTING';
 export function updateSetting(setting, value) {
@@ -14,7 +17,7 @@ export function updateSetting(setting, value) {
     setting: setting,
     value: value
   };
-};
+}
 
 
 // Auth
@@ -27,23 +30,23 @@ export function fetchTokenRequest() {
   return {
     type: FETCH_TOKEN_REQUEST
   };
-};
+}
 
 export function fetchTokenSuccess(payload) {
   return {
     type: FETCH_TOKEN_SUCCESS,
     payload
   };
-};
+}
 
 export function fetchTokenFailure() {
   return {
     type: FETCH_TOKEN_FAILURE
   };
-};
+}
 
 export function fetchToken(data) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(fetchTokenRequest());
 
     return fetch('https://github.com/login/oauth/access_token', {
@@ -55,20 +58,20 @@ export function fetchToken(data) {
       },
       body: JSON.stringify(data)
     })
-    .then(response => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      return response.json();
-    })
-    .then(json => {
-      dispatch(fetchTokenSuccess(json));
-    })
-    .catch(error => {
-      dispatch(fetchTokenFailure());
-    });
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      })
+      .then(json => {
+        dispatch(fetchTokenSuccess(json));
+      })
+      .catch(() => {
+        dispatch(fetchTokenFailure());
+      });
   };
-};
+}
 
 export const LOGOUT = 'LOGOUT';
 export function logout() {
@@ -91,20 +94,20 @@ export function fetchNotificationsRequest(isReFetching) {
       isReFetching
     }
   };
-};
+}
 
 export function fetchNotificationsSuccess(payload) {
   return {
     type: FETCH_NOTIFICATIONS_SUCCESS,
     payload
   };
-};
+}
 
 export function fetchNotificationsFailure() {
   return {
     type: FETCH_NOTIFICATIONS_FAILURE
   };
-};
+}
 
 export function fetchNotifications(isReFetching = false) {
   return (dispatch, getState) => {
@@ -121,20 +124,20 @@ export function fetchNotifications(isReFetching = false) {
         'Cache-Control': 'no-cache'
       },
     })
-    .then(response => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      return response.json();
-    })
-    .then(json => {
-      dispatch(fetchNotificationsSuccess(json));
-    })
-    .catch(error => {
-      dispatch(fetchNotificationsFailure());
-    });
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      })
+      .then(json => {
+        dispatch(fetchNotificationsSuccess(fromJS(json)));
+      })
+      .catch(() => {
+        dispatch(fetchNotificationsFailure());
+      });
   };
-};
+}
 
 
 // Single Notification
@@ -147,20 +150,20 @@ export function markNotificationRequest() {
   return {
     type: MARK_NOTIFICATION_REQUEST
   };
-};
+}
 
 export function markNotificationSuccess(id) {
   return {
     type: MARK_NOTIFICATION_SUCCESS,
     id
   };
-};
+}
 
 export function markNotificationFailure() {
   return {
     type: MARK_NOTIFICATION_FAILURE
   };
-};
+}
 
 export function markNotification(id) {
   return (dispatch, getState) => {
@@ -175,20 +178,20 @@ export function markNotification(id) {
         'Cache-Control': 'no-cache'
       },
     })
-    .then(response => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      return response.json();
-    })
-    .then(json => {
-      dispatch(markNotificationSuccess(json.id));
-    })
-    .catch(error => {
-      dispatch(markNotificationFailure());
-    });
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      })
+      .then(json => {
+        dispatch(markNotificationSuccess(json.id));
+      })
+      .catch(() => {
+        dispatch(markNotificationFailure());
+      });
   };
-};
+}
 
 
 // Repo's Notification
@@ -202,20 +205,20 @@ export function markRepoNotificationsRequest() {
   return {
     type: MARK_REPO_NOTIFICATION_REQUEST
   };
-};
+}
 
 export function markRepoNotificationsSuccess(repoFullName) {
   return {
     type: MARK_REPO_NOTIFICATION_SUCCESS,
     repoFullName
   };
-};
+}
 
 export function markRepoNotificationsFailure() {
   return {
     type: MARK_REPO_NOTIFICATION_FAILURE
   };
-};
+}
 
 export function markRepoNotifications(loginId, repoId, repoFullName) {
   return (dispatch, getState) => {
@@ -230,17 +233,17 @@ export function markRepoNotifications(loginId, repoId, repoFullName) {
       },
       body: JSON.stringify({})
     })
-    .then(response => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      dispatch(markRepoNotificationsSuccess(repoFullName));
-    })
-    .catch(error => {
-      dispatch(markRepoNotificationsFailure());
-    });
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        dispatch(markRepoNotificationsSuccess(repoFullName));
+      })
+      .catch(() => {
+        dispatch(markRepoNotificationsFailure());
+      });
   };
-};
+}
 
 
 // Search
@@ -251,11 +254,11 @@ export function searchNotifications(query) {
     type: SEARCH_NOTIFICATIONS,
     query: query
   };
-};
+}
 
 export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 export function clearSearch() {
   return {
     type: CLEAR_SEARCH
   };
-};
+}

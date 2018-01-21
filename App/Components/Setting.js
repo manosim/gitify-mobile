@@ -41,8 +41,9 @@ export default class Setting extends React.Component {
           onValueChange={(value) => this.props.onChange(value)}
           onTintColor={Constants.BRAND_SUCCESS}
           tintColor={Constants.THEME_ALT}
-          value={this.props.value} />
+          value={this.props.value}
+        />
       </View>
     );
-  };
-};
+  }
+}

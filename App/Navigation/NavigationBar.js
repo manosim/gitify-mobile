@@ -3,10 +3,10 @@ import { Navigator } from 'react-native-deprecated-custom-components';
 
 export default class NavigationBar extends Navigator.NavigationBar {
   render() {
-    var routes = this.props.navState.routeStack;
+    let routes = this.props.navState.routeStack;
 
     if (routes.length) {
-      var route = routes[routes.length - 1];
+      let route = routes[routes.length - 1];
 
       if (route.displayNavBar === false) {
         return null;

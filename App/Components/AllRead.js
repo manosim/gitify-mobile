@@ -76,7 +76,8 @@ export default class AllRead extends React.Component {
           <TouchableHighlight
             style={styles.button}
             underlayColor={Constants.BG_COLOR}
-            onPress={() => this.props.onReload()}>
+            onPress={() => this.props.onReload()}
+          >
             <Text>Reload</Text>
           </TouchableHighlight>
         </View>
@@ -87,6 +88,6 @@ export default class AllRead extends React.Component {
         </View>
       </View>
     );
-  };
+  }
 
-};
+}

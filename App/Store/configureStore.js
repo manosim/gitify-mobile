@@ -30,11 +30,10 @@ export default function configureStore(initialState) {
 
   const load = storage.createLoader(engine);
   load(store)
-    .then((newState) => {
-      console.log('Loaded state:', newState);
+    .then(() => {
       store.dispatch(appLoaded());
     })
-    .catch(() => console.log('Failed to load previous state'));
+    .catch(() => {});
 
   return store;
-};
+}

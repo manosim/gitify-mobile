@@ -71,8 +71,10 @@ export default class ErrorPage extends React.Component {
     const hint = _.sample(Constants.HINTS);
 
     return (
-      <View style={styles.containerWrapper}
-        contentContainerStyle={styles.container}>
+      <View
+style={styles.containerWrapper}
+        contentContainerStyle={styles.container}
+      >
         <View style={styles.wrapper}>
           <Text style={styles.heading}>Oops something went wrong.</Text>
           <Text style={styles.subheading}>{this.props.subheading}</Text>
@@ -80,7 +82,8 @@ export default class ErrorPage extends React.Component {
           <TouchableHighlight
             style={styles.button}
             underlayColor={Constants.BG_COLOR}
-            onPress={() => this.props.onReload()}>
+            onPress={() => this.props.onReload()}
+          >
             <Text>Reload</Text>
           </TouchableHighlight>
         </View>
@@ -91,6 +94,6 @@ export default class ErrorPage extends React.Component {
         </View>
       </View>
     );
-  };
+  }
 
-};
+}
