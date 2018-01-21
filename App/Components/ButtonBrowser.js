@@ -9,7 +9,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
   button: {
     marginHorizontal: 5,
     paddingHorizontal: 10,
@@ -29,7 +29,8 @@ export default class ButtonBrowser extends React.Component {
   static propTypes = {
     icon: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    style: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -51,10 +52,11 @@ export default class ButtonBrowser extends React.Component {
         style={[styles.button, this.props.style]}
         disabled={this.props.disabled}
         underlayColor={Constants.TOOLBAR_BG}
-        onPress={() => this.onPress()}>
+        onPress={() => this.onPress()}
+      >
           <Icon name={this.props.icon} style={[styles.icon, iconStyles]} />
       </TouchableHighlight>
     );
-  };
+  }
 
-};
+}

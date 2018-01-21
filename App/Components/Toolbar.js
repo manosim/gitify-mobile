@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: Constants.TOOLBAR_BG,
     alignItems: 'center',
-    // justifyContent: 'center'
   },
   countWrapper: {
     backgroundColor: Constants.BRAND_SUCCESS,
@@ -56,7 +55,9 @@ const styles = StyleSheet.create({
 class Toolbar extends React.Component {
 
   static propTypes = {
-    count: PropTypes.number.isRequired
+    searchNotifications: PropTypes.func.isRequired,
+    count: PropTypes.number.isRequired,
+    query: PropTypes.string,
   };
 
   render() {
@@ -75,7 +76,8 @@ class Toolbar extends React.Component {
           placeholderTextColor="#FFF"
           autoCapitalize="none"
           autoCorrect={false}
-          returnKeyType="search" />
+          returnKeyType="search"
+        />
       </View>
     );
   }

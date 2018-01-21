@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
@@ -24,6 +25,10 @@ const styles = StyleSheet.create({
 });
 
 class AppContainer extends React.Component {
+  static propTypes = {
+    isLoggedIn: PropTypes.bool.isRequired,
+    loaded: PropTypes.bool.isRequired,
+  };
 
   constructor(props) {
     super(props);
@@ -54,7 +59,8 @@ class AppContainer extends React.Component {
             navigator.pop();
           }
         }}
-        {...this.props} />
+        {...this.props}
+      />
     );
   }
 
@@ -75,16 +81,17 @@ class AppContainer extends React.Component {
       <Navigator
         initialRoute={initialRoute}
         renderScene={this.renderScene.bind(this)}
-        navigationBar={<NavigationBar style={styles.navbar} routeMapper={RouteMapper} />} />
+        navigationBar={<NavigationBar style={styles.navbar} routeMapper={RouteMapper} />}
+      />
     );
   }
-};
+}
 
 function mapStateToProps(state) {
   return {
     loaded: state.settings.get('loaded', false),
     isLoggedIn: state.auth.get('token') !== null
   };
-};
+}
 
 export default connect(mapStateToProps, null)(AppContainer);

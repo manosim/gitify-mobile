@@ -45,32 +45,35 @@ const styles = StyleSheet.create({
 class RepositoryTitle extends React.Component {
 
   static propTypes = {
-    details: PropTypes.object.isRequired
+    details: PropTypes.object.isRequired,
+    markRepoNotifications: PropTypes.func.isRequired
   };
 
   markAsRead() {
-    const loginId = this.props.details.owner.login;
-    const repoId = this.props.details.name;
-    const fullName = this.props.details.full_name;
-    this.props.markRepoNotifications(loginId, repoId, fullName);
+    const loginId = this.props.details.data.getIn(['owner', 'login']);
+    const repoId = this.props.details.data.get('name');
+    const fullName = this.props.details.data.get('full_name');
+    return this.props.markRepoNotifications(loginId, repoId, fullName);
   }
 
   render() {
-    const details = this.props.details;
-    const avatar_url = details.owner.avatar_url || null;
+    const firstRepoDetails = this.props.details.data[0].get('repository');
+    const avatar_url = firstRepoDetails.getIn(['owner', 'avatar_url']);
 
     return (
       <View style={styles.container}>
         <Image style={styles.avatar} source={{uri: avatar_url}} />
-        <Text style={styles.title} numberOfLines={1}>{details.full_name}</Text>
+        <Text style={styles.title} numberOfLines={1}>{firstRepoDetails.get('full_name')}</Text>
+
         <TouchableHighlight
           onPress={() => this.markAsRead()}
-          underlayColor={Constants.REPO_TITLE_BG}>
+          underlayColor={Constants.REPO_TITLE_BG}
+        >
           <Icon name="check" style={styles.checkIcon} />
         </TouchableHighlight>
       </View>
     );
-  };
-};
+  }
+}
 
 export default connect(null, { markRepoNotifications })(RepositoryTitle);

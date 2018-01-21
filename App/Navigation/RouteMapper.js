@@ -6,7 +6,7 @@ import NavigationBackButton from './NavbarBackButton';
 
 export default {
 
-  LeftButton(route, navigator, index, navState) {
+  LeftButton(route, navigator, index) {
     if (index === 0) {
       return null;
     }
@@ -16,17 +16,22 @@ export default {
     );
   },
 
-  RightButton(route, navigator, index, navState) {
+  RightButton(route, navigator, index) {
     if (route.id === 'settings-view') {
       return null;
     }
 
     return (
-      <NavigationButton route={route} index={index} navigator={navigator} direction="right" />
+      <NavigationButton
+        route={route}
+        index={index}
+        navigator={navigator}
+        direction="right"
+      />
     );
   },
 
-  Title(route, navigator, index, navState) {
+  Title(route) {
     return (
       <NavigationTitle route={route} />
     );

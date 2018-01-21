@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Octicons';
 
 import Constants from '../Utils/Constants';
@@ -26,6 +27,10 @@ const styles = StyleSheet.create({
 });
 
 export default class NavigationButton extends React.Component {
+  static propTypes = {
+    navigator: PropTypes.object.isRequired,
+  };
+
   _noDuplicatesPush(route) {
     let routes = this.props.navigator.getCurrentRoutes();
     if (routes[routes.length - 1].id !== route.id) {
@@ -43,7 +48,8 @@ export default class NavigationButton extends React.Component {
         <TouchableHighlight
           style={styles.toolbarButton}
           underlayColor={Constants.NAVBAR_BG}
-          onPress={() => this._goToSettings()}>
+          onPress={() => this._goToSettings()}
+        >
           <Icon name="gear" style={styles.icon} />
         </TouchableHighlight>
       </View>

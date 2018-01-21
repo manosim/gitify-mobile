@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
   Platform,
@@ -9,7 +10,7 @@ import {
 
 import Constants from '../Utils/Constants';
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Constants.BG_COLOR
@@ -17,6 +18,12 @@ var styles = StyleSheet.create({
 });
 
 export default class SceneContainer extends React.Component {
+  static propTypes = {
+    navigator: PropTypes.object.isRequired,
+    route: PropTypes.object.isRequired,
+    // authUrl: PropTypes.string.isRequired,
+  };
+
   componentWillMount() {
     this.paintStatusBar();
   }
@@ -49,4 +56,4 @@ export default class SceneContainer extends React.Component {
       </View>
     );
   }
-};
+}

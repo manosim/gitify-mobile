@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import PropTypes from 'prop-types';
 
 import Constants from '../Utils/Constants';
 
@@ -36,12 +37,19 @@ const Loading = props => {
 
   return (
     <View style={[styles.container, props.style && props.style]}>
-      <ActivityIndicator animating={true} color={Constants.THEME_PRIMARY} size="large" />
+      <ActivityIndicator animating color={Constants.THEME_PRIMARY} size="large" />
       {!props.hideText && (
         <Text style={styles.loadingText}>Loading{text}</Text>
       )}
     </View>
   );
-}
+};
+
+Loading.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  hideText: PropTypes.bool,
+  text: PropTypes.string,
+  style: PropTypes.object,
+};
 
 export default Loading;

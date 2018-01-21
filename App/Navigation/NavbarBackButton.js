@@ -28,6 +28,10 @@ const styles = StyleSheet.create({
 export default class NavigationButton extends React.Component {
   static contextTypes = {
     drawer: PropTypes.object
+  };
+
+  static propTypes = {
+    navigator: PropTypes.object.isRequired,
   }
 
   _goBack() {
@@ -40,7 +44,8 @@ export default class NavigationButton extends React.Component {
         <TouchableHighlight
           style={styles.toolbarButton}
           underlayColor={Constants.NAVBAR_BG}
-          onPress={() => this._goBack()}>
+          onPress={() => this._goBack()}
+        >
           <Icon name="chevron-left" style={styles.icon} />
         </TouchableHighlight>
       </View>

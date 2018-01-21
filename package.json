@@ -27,6 +27,7 @@
   "devDependencies": {
     "babel-eslint": "=6.0.4",
     "babel-preset-react-native": "4.0.0",
+    "eslint": "=3.19.0",
     "eslint-config-dabapps": "github:dabapps/eslint-config-dabapps#v3.1.1",
     "redux-logger": "=3.0.6"
   }

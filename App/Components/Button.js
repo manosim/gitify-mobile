@@ -9,7 +9,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
   button: {
     borderRadius: Constants.BASE_BORDER_RADIUS,
     borderWidth: 1.5,
@@ -53,10 +53,11 @@ export default class Button extends React.Component {
         style={[styles.button, this.props.style]}
         disabled={this.props.disabled}
         underlayColor={Constants.THEME_ALT_ACTIVE}
-        onPress={this.onPress.bind(this)}>
+        onPress={this.onPress.bind(this)}
+      >
         <Text style={styles.buttonText}>{this.props.text}</Text>
       </TouchableHighlight>
     );
-  };
+  }
 
-};
+}

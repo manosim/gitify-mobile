@@ -47,11 +47,14 @@ const styles = StyleSheet.create({
 
 class Notification extends React.Component {
   static propTypes = {
-    details: PropTypes.object.isRequired
+    navigator: PropTypes.object.isRequired,
+    inBrowser: PropTypes.bool.isRequired,
+    details: PropTypes.object.isRequired,
+    markNotification: PropTypes.func.isRequired,
   };
 
   _getTypeIcon() {
-    switch (this.props.details.subject.type) {
+    switch (this.props.details.getIn(['subject', 'type'])) {
       case 'Issue':
         return 'issue-opened';
       case 'PullRequest':
@@ -66,11 +69,12 @@ class Notification extends React.Component {
   }
 
   markAsRead() {
-    this.props.markNotification(this.props.details.id);
+    this.props.markNotification(this.props.details.get('id'));
   }
 
   openNotification() {
-    let url = this.props.details.subject.url.replace('api.github.com/repos', 'www.github.com');
+    let url = this.props.details.getIn(['subject', 'url'])
+      .replace('api.github.com/repos', 'www.github.com');
     if (url.indexOf('/pulls/') !== -1) {
       url = url.replace('/pulls/', '/pull/');
     }
@@ -93,25 +97,27 @@ class Notification extends React.Component {
         <TouchableHighlight
           style={{flex: 1}}
           onPress={() => this.openNotification()}
-          underlayColor="#FFF">
-          <Text style={styles.title} numberOfLines={1}>{details.subject.title}</Text>
+          underlayColor="#FFF"
+        >
+          <Text style={styles.title} numberOfLines={1}>{details.getIn(['subject', 'title'])}</Text>
         </TouchableHighlight>
 
         <TouchableHighlight
           style={styles.iconWrapper}
           onPress={() => this.markAsRead()}
-          underlayColor="#FFF">
+          underlayColor="#FFF"
+        >
           <Icon name="check" style={styles.checkIcon} />
         </TouchableHighlight>
       </View>
     );
-  };
-};
+  }
+}
 
 function mapStateToProps(state) {
   return {
     inBrowser: state.settings.get('inBrowser')
   };
-};
+}
 
 export default connect(mapStateToProps, { markNotification })(Notification);
