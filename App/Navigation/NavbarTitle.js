@@ -1,4 +1,4 @@
-import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 
 import {
   StyleSheet,
@@ -18,7 +18,7 @@ var styles = StyleSheet.create({
   }
 });
 
-export default class NavigationTitle extends Component {
+export default class NavigationTitle extends React.Component {
   render() {
     return (
       <View style={styles.container}>

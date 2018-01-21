@@ -1,6 +1,6 @@
 import _ from 'underscore';
-import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import Constants from '../Utils/Constants';
 
@@ -60,16 +60,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class ErrorPage extends Component {
+export default class ErrorPage extends React.Component {
   static propTypes = {
     onReload: PropTypes.func.isRequired,
     subheading: PropTypes.string.isRequired
   };
-
-  constructor(props) {
-    super(props);
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-  }
 
   render() {
     const emoji = _.sample(Constants.ERROR_EMOJIS);

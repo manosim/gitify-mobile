@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { connect } from 'react-redux';
 
 import { fetchNotifications } from '../Actions';
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class NotificationsView extends Component {
+class NotificationsView extends React.Component {
 
   constructor(props) {
     super(props);

@@ -1,11 +1,9 @@
-import React, { Component } from 'react';  // eslint-disable-line no-unused-vars
+import React from 'react'; // eslint-disable-line no-unused-vars
 
 import Constants from '../Utils/Constants';
 
 import {
-  ActivityIndicatorIOS,
-  Platform,
-  ProgressBarAndroid,
+  ActivityIndicator,
   StyleSheet,
   Text,
   View,
@@ -29,26 +27,21 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Loading extends Component {
-  render() {
-    if (!this.props.isLoading) {
-      return null;
-    }
-
-    const text = this.props.text ? ' ' + this.props.text : null;
-    const loading = Platform.OS === 'ios' ? (
-      <ActivityIndicatorIOS animating={true} color={Constants.THEME_PRIMARY} size="large" />
-    ) : (
-      <ProgressBarAndroid styleAttr="Inverse" color={Constants.THEME_PRIMARY} />
-    );
-
-    return (
-      <View style={[styles.container, this.props.style && this.props.style]}>
-        {loading}
-        {this.props.hideText ? <View /> : (
-          <Text style={styles.loadingText}>Loading{text}</Text>
-        )}
-      </View>
-    );
+const Loading = props => {
+  if (!props.isLoading) {
+    return null;
   }
+
+  const text = props.text && ' ' + props.text;
+
+  return (
+    <View style={[styles.container, props.style && props.style]}>
+      <ActivityIndicator animating={true} color={Constants.THEME_PRIMARY} size="large" />
+      {!props.hideText && (
+        <Text style={styles.loadingText}>Loading{text}</Text>
+      )}
+    </View>
+  );
 }
+
+export default Loading;

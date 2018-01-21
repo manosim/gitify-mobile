@@ -1,11 +1,12 @@
-import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { connect } from 'react-redux';
 
 import {
-  BackAndroid,
-  Navigator,
+  BackHandler,
   StyleSheet
 } from 'react-native';
+
+import { Navigator } from 'react-native-deprecated-custom-components';
 
 import Constants from './Utils/Constants';
 import NavigationBar from './Navigation/NavigationBar';
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class AppContainer extends Component {
+class AppContainer extends React.Component {
 
   constructor(props) {
     super(props);
@@ -31,7 +32,7 @@ class AppContainer extends Component {
   }
 
   componentWillMount() {
-    BackAndroid.addEventListener('hardwareBackPress', () => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
       if (this.navigator && this.navigator.getCurrentRoutes().length > 1) {
         this.navigator.pop();
         return true;

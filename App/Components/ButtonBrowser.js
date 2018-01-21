@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Constants from '../Utils/Constants';
@@ -23,7 +24,7 @@ var styles = StyleSheet.create({
   }
 });
 
-export default class ButtonBrowser extends Component {
+export default class ButtonBrowser extends React.Component {
 
   static propTypes = {
     icon: PropTypes.string.isRequired,

@@ -1,6 +1,6 @@
 import _ from 'underscore';
-import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import Constants from '../Utils/Constants';
 
@@ -57,15 +57,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class AllRead extends Component {
+export default class AllRead extends React.Component {
   static propTypes = {
     onReload: PropTypes.func.isRequired
   };
-
-  constructor(props) {
-    super(props);
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-  }
 
   render() {
     const message = _.sample(Constants.ALLREAD_MESSAGES);

@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class SettingUp extends Component {
+export default class SettingUp extends React.Component {
   render() {
     return (
       <View style={styles.container}>

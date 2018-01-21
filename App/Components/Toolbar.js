@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';  // eslint-disable-line no-unused-vars
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Octicons';
 
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class Toolbar extends Component {
+class Toolbar extends React.Component {
 
   static propTypes = {
     count: PropTypes.number.isRequired

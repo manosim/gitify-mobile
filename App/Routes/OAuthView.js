@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class OAuthView extends Component {
+class OAuthView extends React.Component {
   static propTypes = {
     authUrl: PropTypes.string.isRequired
   };

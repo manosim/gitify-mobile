@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Octicons';
 
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class RepositoryTitle extends Component {
+class RepositoryTitle extends React.Component {
 
   static propTypes = {
     details: PropTypes.object.isRequired
